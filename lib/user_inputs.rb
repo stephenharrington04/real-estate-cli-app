@@ -29,17 +29,22 @@ class User_inputs
   def min_price?
     min_p = ""
     valid_prices = ["0", "50000", "100000", "150000", "200000", "250000", "300000", "350000"]
+    char_count = valid_prices.join.size
+    puts "Enter a min-price for the home in which you wish to purchase:"
     until min_p != ""
-      puts "Enter a min-price for the home in which you wish to purchase:"
-      valid_prices.each {|price| puts "#{price}"}
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-"}
+      puts ""
+      valid_prices.each {|price| print "     #{price}"}
+      puts ""
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-"}
+      puts ""
       input = gets.strip
       if valid_prices.include?(input)
         min_p = input
       else
         puts ""
-        puts "Please enter a valid min-price."
         puts ""
-        puts ""
+        puts "Please enter a valid min-price from the list below:"
       end
     end
     min_p = nil if min_p == "0"
@@ -49,17 +54,22 @@ class User_inputs
   def max_price?
     max_p = ""
     valid_prices = ["90000", "180000", "250000", "350000", "450000", "500000", "600000", "any"]
+    char_count = valid_prices.join.size
+    puts "Enter a max-price for the home in which you wish to purchase:"
     until max_p != ""
-      puts "Enter a max-price for the home in which you wish to purchase:"
-      valid_prices.each {|price| puts "#{price}"}
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-"}
+      puts ""
+      valid_prices.each {|price| print "     #{price}"}
+      puts ""
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-"}
+      puts ""
       input = gets.strip
       if valid_prices.include?(input)
         max_p = input
       else
         puts ""
-        puts "Please enter a valid max-price."
         puts ""
-        puts ""
+        puts "Please enter a valid max-price from the list below:"
       end
     end
     max_p = nil if max_p == "any"
@@ -69,17 +79,22 @@ class User_inputs
   def bedrooms?
     beds = ""
     valid_rooms = ["any", "studio", "1+", "2+", "3+", "4+", "5+"]
+    char_count = valid_rooms.join.size
+    puts "Enter the number of bedrooms for the home in which you wish to purchase:"
     until beds != ""
-      puts "Enter the number of bedrooms for the home in which you wish to purchase:"
-      valid_rooms.each {|room| puts "#{room}"}
+      (char_count + (5 * (valid_rooms.size + 1))).times {print "-"}
+      puts ""
+      valid_rooms.each {|room| print "     #{room}"}
+      puts ""
+      (char_count + (5 * (valid_rooms.size + 1))).times {print "-"}
+      puts ""
       input = gets.strip
       if valid_rooms.include?(input)
         beds = input
       else
         puts ""
-        puts "Please enter a valid input."
         puts ""
-        puts ""
+        puts "Please enter a valid input from the list below:"
       end
     end
     beds = nil if beds == "any"
@@ -89,17 +104,22 @@ class User_inputs
   def bathrooms?
     baths = ""
     valid_baths = ["any", "1+", "2+", "3+", "4+", "5+"]
+    char_count = valid_baths.join.size
+    puts "Enter the number of bathrooms for the home in which you wish to purchase:"
     until baths != ""
-      puts "Enter the number of bathrooms for the home in which you wish to purchase:"
-      valid_baths.each {|room| puts "#{room}"}
+      (char_count + (5 * (valid_baths.size + 1))).times {print "-"}
+      puts ""
+      valid_baths.each {|room| print "     #{room}"}
+      puts ""
+      (char_count + (5 * (valid_baths.size + 1))).times {print "-"}
+      puts ""
       input = gets.strip
       if valid_baths.include?(input)
         baths = input
       else
         puts ""
-        puts "Please enter a valid input."
         puts ""
-        puts ""
+        puts "Please enter a valid input from the list below:"
       end
     end
     baths = nil if baths == "any"
@@ -109,17 +129,22 @@ class User_inputs
   def property_type?
     p_type = ""
     valid_types = ["any", "single family home", "condos/townhomes/co-ops", "mfd/mobile homes", "farms/ranches", "land", "multi-family"]
+    char_count = valid_types.join.size
+    puts "Enter the type of property you wish to purchase:"
     until p_type != ""
-      puts "Enter the type of property you wish to purchase:"
-      valid_types.each {|type| puts "#{type}"}
+      (char_count + (5 * (valid_types.size + 1))).times {print "-"}
+      puts ""
+      valid_types.each {|type| print "     #{type}"}
+      puts ""
+      (char_count + (5 * (valid_types.size + 1))).times {print "-"}
+      puts ""
       input = gets.strip
       if valid_types.include?(input)
         p_type = input
       else
         puts ""
-        puts "Please enter a valid input."
         puts ""
-        puts ""
+        puts "Please enter a valid input from the list below:"
       end
     end
     p_type = nil if p_type == "any"
