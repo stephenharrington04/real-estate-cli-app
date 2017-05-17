@@ -11,8 +11,6 @@ class User_inputs
     @property_type = self.property_type?
   end
 
-
-
   def zip_code?
     zip = ""
     until zip.chars.size == 5
@@ -44,12 +42,13 @@ class User_inputs
         puts ""
       end
     end
+    min_p = nil if min_p == "0"
     min_p
   end
 
   def max_price?
     max_p = ""
-    valid_prices = ["90000", "180000", "250000", "350000", "450000", "500000", "600000", "any price"]
+    valid_prices = ["90000", "180000", "250000", "350000", "450000", "500000", "600000", "any"]
     until max_p != ""
       puts "Enter a max-price for the home in which you wish to purchase:"
       valid_prices.each {|price| puts "#{price}"}
@@ -63,6 +62,7 @@ class User_inputs
         puts ""
       end
     end
+    max_p = nil if max_p == "any"
     max_p
   end
 
@@ -82,6 +82,7 @@ class User_inputs
         puts ""
       end
     end
+    beds = nil if beds == "any"
     beds
   end
 
@@ -101,6 +102,7 @@ class User_inputs
         puts ""
       end
     end
+    baths = nil if baths == "any"
     baths
   end
 
@@ -120,6 +122,7 @@ class User_inputs
         puts ""
       end
     end
+    p_type = nil if p_type == "any"
     p_type
   end
 
