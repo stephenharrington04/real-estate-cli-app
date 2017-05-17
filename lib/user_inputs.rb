@@ -91,4 +91,23 @@ class User_inputs
     baths
   end
 
+  def property_type
+    p_type = ""
+    valid_types = ["single family home", "condos/townhomes/co-ops", "mfd/mobile homes", "farms/ranches", "land", "multi-family"]
+    until p_type != ""
+      puts "Enter the type of property you wish to purchase:"
+      valid_types.each {|type| puts "#{type}"}
+      input = gets.strip
+      if valid_types.include?(input)
+        p_type = input
+      else
+        puts ""
+        puts "Please enter a valid input."
+        puts ""
+        puts ""
+      end
+    end
+    p_type
+  end
+
 end
