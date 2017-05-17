@@ -1,6 +1,19 @@
 class User_inputs
 
-  def zip_code
+  attr_reader :zip_code, :min_price, :max_price, :bedrooms, :bathrooms, :property_type
+
+  def initialize
+    @zip_code = self.zip_code?
+    @min_price = self.min_price?
+    @max_price = self.max_price?
+    @bedrooms = self.bedrooms?
+    @bathrooms = self.bathrooms?
+    @property_type = self.property_type?
+  end
+
+
+
+  def zip_code?
     zip = ""
     until zip.chars.size == 5
       puts "Enter the 5 digit zip code for which you are interested in buying a home."
@@ -15,7 +28,7 @@ class User_inputs
     zip
   end
 
-  def min_price
+  def min_price?
     min_p = ""
     valid_prices = ["0", "50000", "100000", "150000", "200000", "250000", "300000", "350000"]
     until min_p != ""
@@ -34,7 +47,7 @@ class User_inputs
     min_p
   end
 
-  def max_price
+  def max_price?
     max_p = ""
     valid_prices = ["90000", "180000", "250000", "350000", "450000", "500000", "600000", "any price"]
     until max_p != ""
@@ -53,7 +66,7 @@ class User_inputs
     max_p
   end
 
-  def bedrooms
+  def bedrooms?
     beds = ""
     valid_rooms = ["any", "studio", "1+", "2+", "3+", "4+", "5+"]
     until beds != ""
@@ -72,7 +85,7 @@ class User_inputs
     beds
   end
 
-  def bathrooms
+  def bathrooms?
     baths = ""
     valid_baths = ["any", "1+", "2+", "3+", "4+", "5+"]
     until baths != ""
@@ -91,9 +104,9 @@ class User_inputs
     baths
   end
 
-  def property_type
+  def property_type?
     p_type = ""
-    valid_types = ["single family home", "condos/townhomes/co-ops", "mfd/mobile homes", "farms/ranches", "land", "multi-family"]
+    valid_types = ["any", "single family home", "condos/townhomes/co-ops", "mfd/mobile homes", "farms/ranches", "land", "multi-family"]
     until p_type != ""
       puts "Enter the type of property you wish to purchase:"
       valid_types.each {|type| puts "#{type}"}
