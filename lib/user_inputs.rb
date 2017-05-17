@@ -38,7 +38,7 @@ class User_inputs
       puts ""
       (char_count + (5 * (valid_prices.size + 1))).times {print "-"}
       puts ""
-      input = gets.strip
+      input = gets.strip.gsub(",","")
       if valid_prices.include?(input)
         min_p = input
       else
@@ -63,7 +63,7 @@ class User_inputs
       puts ""
       (char_count + (5 * (valid_prices.size + 1))).times {print "-"}
       puts ""
-      input = gets.strip
+      input = gets.strip.downcase.gsub(",","")
       if valid_prices.include?(input)
         max_p = input
       else
@@ -88,7 +88,7 @@ class User_inputs
       puts ""
       (char_count + (5 * (valid_rooms.size + 1))).times {print "-"}
       puts ""
-      input = gets.strip
+      input = gets.strip.downcase
       if valid_rooms.include?(input)
         beds = input
       else
@@ -113,7 +113,7 @@ class User_inputs
       puts ""
       (char_count + (5 * (valid_baths.size + 1))).times {print "-"}
       puts ""
-      input = gets.strip
+      input = gets.strip.downcase
       if valid_baths.include?(input)
         baths = input
       else
@@ -138,7 +138,7 @@ class User_inputs
       puts ""
       (char_count + (5 * (valid_types.size + 1))).times {print "-"}
       puts ""
-      input = gets.strip
+      input = gets.strip.downcase
       if valid_types.include?(input)
         p_type = input
       else
