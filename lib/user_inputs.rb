@@ -53,6 +53,25 @@ class User_inputs
     max_p
   end
 
+  def bedrooms
+    beds = ""
+    valid_rooms = ["any", "studio", "1+", "2+", "3+", "4+", "5+"]
+    until beds != ""
+      puts "Enter the number of bedrooms for the home in which you wish to purchase:"
+      valid_rooms.each {|room| puts "#{room}"}
+      input = gets.strip
+      if valid_rooms.include?(input)
+        beds = input
+      else
+        puts ""
+        puts "Please enter a valid input."
+        puts ""
+        puts ""
+      end
+    end
+    beds
+  end
+
 
 
 end
