@@ -72,6 +72,23 @@ class User_inputs
     beds
   end
 
-
+  def bathrooms
+    baths = ""
+    valid_baths = ["any", "1+", "2+", "3+", "4+", "5+"]
+    until baths != ""
+      puts "Enter the number of bathrooms for the home in which you wish to purchase:"
+      valid_baths.each {|room| puts "#{room}"}
+      input = gets.strip
+      if valid_baths.include?(input)
+        baths = input
+      else
+        puts ""
+        puts "Please enter a valid input."
+        puts ""
+        puts ""
+      end
+    end
+    baths
+  end
 
 end
