@@ -21,7 +21,6 @@ class Parse
     end
   end
 
-
 #if bedrooms = nil, beds = nil
 #if bedrooms = studio, beds = beds-studio
 #if bedrooms = 1+, beds = beds-1
@@ -29,7 +28,26 @@ class Parse
 #if bedrooms = 3+, beds = beds-3
 #if bedrooms = 4+, beds = beds-4
 #if bedrooms = 5+, beds = beds-5
-
+  def bedrooms_parse(bedrooms)
+    beds = ""
+    case bedrooms
+    when nil
+      beds = nil
+    when "studio"
+      beds = "beds-studio"
+    when "1+"
+      beds = "beds-1"
+    when "2+"
+      beds = "beds-2"
+    when "3+"
+      beds = "beds-3"
+    when "4+"
+      beds = "beds-4"
+    when "5+"
+      beds = "beds-5"
+    end
+    beds
+  end
 
 #if bathrooms = nil, baths = nil
 #if bathrooms = 1+, baths = baths-1
