@@ -1,8 +1,9 @@
-class Parse
+class Parser
 
   attr_reader :parsed_zip_code, :parsed_price, :parsed_bedrooms, :parsed_bathrooms, :parsed_property_type
 
   def initialize(inputs)
+    #where inputs is an instance of a User_inputs
     @parsed_zip_code = inputs.zip_code
     @parsed_price = self.price_parse(inputs.min_price, inputs.max_price)
     @parsed_bedrooms = self.bedrooms_parse(inputs.bedrooms)
@@ -10,9 +11,6 @@ class Parse
     @parsed_property_type = self.property_parse(inputs.property_type)
   end
 #will probable need to change all the argument names to something else...  but will figure out later
-
-#zipcode should be fine the way it is.
-
 
   def price_parse(min_p, max_p)
     price = ""
