@@ -55,7 +55,24 @@ class Parse
 #if bathrooms = 3+, baths = baths-3
 #if bathrooms = 4+, baths = baths-4
 #if bathrooms = 5+, baths = baths-5
-
+  def bathrooms_parse(bathrooms)
+    baths = ""
+    case bathrooms
+    when nil
+      baths = nil
+    when "1+"
+      baths = "baths-1"
+    when "2+"
+      baths = "baths-2"
+    when "3+"
+      baths = "baths-3"
+    when "4+"
+      baths = "baths-4"
+    when "5+"
+      baths = "baths-5"
+    end
+    baths
+  end
 
 # if property_type = nil, type = nil
 # if property_type = single family home, type = type-single-family-home
