@@ -1,20 +1,31 @@
 class Parse
 
+  attr_reader :parsed_zip_code, :parsed_price, :parsed_bedrooms, :parsed_bathrooms, :parsed_property_type
+
+  def initialize(inputs)
+    @parsed_zip_code = inputs.zip_code
+    @parsed_price = self.price_parse(inputs.min_price, inputs.max_price)
+    @parsed_bedrooms = self.bedrooms_parse(inputs.bedrooms)
+    @parsed_bathrooms = self.bathrooms_parse(inputs.bathrooms)
+    @parsed_property_type = self.property_parse(inputs.property_type)
+  end
 #will probable need to change all the argument names to something else...  but will figure out later
 
-#zipcode should be fine the way it is.  Not sure if I'll even need a method for it, but will keep for now.
-  def zip_code(zip_code)
-    zip_code
-  end
+#zipcode should be fine the way it is.
 
-  def price_parse(min_price, max_price)
-    if min_price == nil && max_price == nil
-      nil
-    elsif min_price == nil && max_price != nil
-      "price-na-#{max_price}"
-    elsif min_price != nil && max_price == nil
-      "price-#{min_price}-na"
+
+  def price_parse(min_p, max_p)
+    price = ""
+    if min_p == nil && max_p == nil
+      price = nil
+    elsif min_p == nil && max_p != nil
+      price = "price-na-#{max_p}"
+    elsif min_p != nil && max_p == nil
+      price = "price-#{min_p}-na"
+    else
+      price = "price-#{min_p}-#{max_p}"
     end
+    price
   end
 
   def bedrooms_parse(bedrooms)
