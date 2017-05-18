@@ -1,14 +1,25 @@
 class Parse
 
-#zipcode should be fine the way it is.
+#will probable need to change all the argument names to something else...  but will figure out later
 
-
+#zipcode should be fine the way it is.  Not sure if I'll even need a method for it, but will keep for now.
+  def zip_code(zip_code)
+    zip_code
+  end
 
 #min_price and max_price will combine into one segment
   #if min_price = nil & max_price = nil, price = nil
   #if min_price = nil & max price = something, price = price-na-something
   #if min_price = something & max price = nil, price = price-something-na
-
+  def price_parse(min_price, max_price)
+    if min_price == nil && max_price == nil
+      nil
+    elsif min_price == nil && max_price != nil
+      "price-na-#{max_price}"
+    elsif min_price != nil && max_price == nil
+      "price-#{min_price}-na"
+    end
+  end
 
 
 #if bedrooms = nil, beds = nil
