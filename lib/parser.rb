@@ -81,7 +81,26 @@ class Parse
 # if property_type = farms/ranches, type = type-farms-ranches
 # if property_type = land, type = type-land
 # if property_type = multi-family, type = type-multi-family-home
-
+  def property_parse(property_type)
+    type = ""
+    case property_type
+    when nil
+      type = nil
+    when "single family home"
+      type = "type-single-family-home"
+    when "condos/townhomes/co-ops"
+      type = "type-condo-townhome-row-home-co-op"
+    when "mfd/mobile homes"
+      type = "type-mfd-mobile-home"
+    when "farms/ranches"
+      type = "type-farms-ranches"
+    when "land"
+      type = "type-land"
+    when "multi-family"
+      type = "type-multi-family-home"
+    end
+    type
+  end
 
 
 end
