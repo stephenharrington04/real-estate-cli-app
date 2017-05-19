@@ -1,6 +1,6 @@
 class Parser
 
-  attr_reader :parsed_zip_code, :parsed_price, :parsed_bedrooms, :parsed_bathrooms, :parsed_property_type
+  attr_reader :parsed_zip_code, :parsed_price, :parsed_bedrooms, :parsed_bathrooms, :parsed_property_type, :search_parameters
 
   def initialize(inputs)
     #where inputs is an instance of a User_inputs
@@ -9,8 +9,17 @@ class Parser
     @parsed_bedrooms = self.bedrooms_parse(inputs.bedrooms)
     @parsed_bathrooms = self.bathrooms_parse(inputs.bathrooms)
     @parsed_property_type = self.property_parse(inputs.property_type)
+    @search_parameters = {}
+    self.save
   end
 #will probable need to change all the argument names to something else...  but will figure out later
+  def save
+    self.search_parameters[:zip] = self.parsed_zip_code
+    self.search_parameters[:price_range] = self.parsed_price if self.parsed_price != nil
+    self.search_parameters[:bedrooms] = self.parsed_bedrooms if self.parsed_bedrooms != nil
+    self.search_parameters[:bathrooms] = self.parsed_bathrooms if self.parsed_bathrooms != nil
+    self.search_parameters[:prop_type] = self.parsed_property_type if self.parsed_property_type != nil
+  end
 
   def price_parse(min_p, max_p)
     price = ""
