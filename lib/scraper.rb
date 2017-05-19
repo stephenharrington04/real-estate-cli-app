@@ -4,7 +4,7 @@ require 'nokogiri'
 
 class Scraper
 
-  #The index scraper should take in the @index_url as an argument
+  #The index scraper should take in an index_url as an argument
     #want to scrape:
       #the address
       #the price
@@ -17,9 +17,9 @@ class Scraper
     home_info = []
     html = open(index_url)
     doc = Nokogiri::HTML(html)
-    doc.css(".properties show ").css("div .page-content").css("div .container-srp").css("div .srp-body").css("div .container srp-card-wrapper").css("div .row js-sticky-container").css("section .col-lg-9 col-md-8 srp-list-column").css("div .srp-list margin-top").css("div").css("ul .srp-list-marginless list-unstyled").css("li").each do |li|
+    doc.css(".properties show ").css("div.page-content").css("div.container-srp").css("div.srp-body").css("div.container srp-card-wrapper").css("div.row js-sticky-container").css("section.col-lg-9 col-md-8 srp-list-column").css("div.srp-list margin-top").css("div").css("ul.srp-list-marginless list-unstyled").css("li").each do |li|
       home_address =
-      home_price =
+      home_price = li.css("data-price")
       home_num_beds =
       home_num_baths =
       home_sqft =
