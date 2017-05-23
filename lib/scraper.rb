@@ -10,17 +10,15 @@ class Scraper
       #the price
       #the beds
       #the baths
-      #the sq ft
-      #the garage size (1, 2, 3 car garage)
       #the url for the house
   def index_scraper(index_url)
     house_info = []
     html = open(index_url)
     doc = Nokogiri::HTML(html)
     binding.pry
+    #  doc.css(".properties").css(".row").css(".srp-list").css(".srp-list-marginless").css("li").first.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value")
     doc.css(".properties").css(".row").css(".srp-list").css(".srp-list-marginless").css("li").each do |li|
     first.css(".srp-item-body")
-      #.css("div.page-content").css("div.container-srp").css("div.srp-body").css("div.container srp-card-wrapper").css("div.row js-sticky-container").css("section.col-lg-9 col-md-8 srp-list-column").css("div.srp-list margin-top").css("div").css("ul.srp-list-marginless list-unstyled").css("li").each do |li|
       house_url = "http://www.realtor.com"
       home_address = []
       home_address << li.css(".srp-item-body").css(".srp-item-address").css(".listing-street-address").text
@@ -29,12 +27,10 @@ class Scraper
       home_address << li.css(".srp-item-body").css(".srp-item-address").css(".listing-postal").text
       home_address.join
       home_price = li.css(".srp-item-body").css(".srp-item-price").css(".data-price-display").text
-      home_num_beds = li.css()
-      home_num_baths = li.css("data-baths").text
-      home_sqft =
-      home_garage =
+      home_num_beds = li.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value.meta-beds").text
+      home_num_baths = li.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value").text
       house_url << li.css(".srp-item-body").css("a").attribute("href").value
-      house_info << {address: home_address, price: home_price, beds: home_num_beds, baths: home_num_baths, sqft: home_sqft, garage: home_garage, url: house_url}
+      house_info << {address: home_address, price: home_price, beds: home_num_beds, baths: home_num_baths, url: house_url}
 
     end
     house_info
