@@ -28,10 +28,9 @@ class Scraper
       home_address.join
       home_price = li.css(".srp-item-body").css(".srp-item-price").css(".data-price-display").text
       home_num_beds = li.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value.meta-beds").text
-      home_num_baths = li.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value").text
+      home_num_baths = li.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li")[1].css("span.data-value").text
       house_url << li.css(".srp-item-body").css("a").attribute("href").value
       house_info << {address: home_address, price: home_price, beds: home_num_beds, baths: home_num_baths, url: house_url}
-
     end
     house_info
   end
