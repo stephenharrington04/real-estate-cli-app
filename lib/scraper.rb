@@ -3,7 +3,6 @@ require 'pry'
 require 'nokogiri'
 
 class Scraper
-
   #The index scraper should take in an index_url as an argument
     #want to scrape:
       #the address
@@ -14,8 +13,8 @@ class Scraper
   def index_scraper(index_url)
     house_info = []
     doc = Nokogiri::HTML(open(index_url))
-    #doc.css(".properties").css(".row").css(".srp-list").css(".srp-list-marginless").css("li").first.css(".srp-item-body").css(".srp-item-details").css("a").first.attr("href")
-    doc.css(".properties").css(".row").css(".srp-list").css(".srp-list-marginless").css("li").each do |li|
+    #doc.css(".properties").css(".row").css(".srp-list").css(".srp-list-marginless").css("li").first.css(".srp-item-body").css(".srp-item-details").css("a.srp-card-anchor-overlay").attribute("href").value
+    doc.css(".properties").css(".row").css(".srp-list").css(".srp-list-marginless").each do |li|
       house_url = "http://www.realtor.com"
       home_address = []
       home_address << li.css(".srp-item-body").css(".srp-item-address").css(".listing-street-address").text
@@ -26,9 +25,10 @@ class Scraper
       home_price = li.css(".srp-item-body").css(".srp-item-price").css(".data-price-display").text
       home_num_beds = li.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value.meta-beds").text
       home_num_baths = li.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li")[1].css("span.data-value").text
-      house_url << li.css(".srp-item-body").css(".srp-item-details").css("a").first.attr("href")
+      # doc.css(".properties").css(".row").css(".srp-list").css(".srp-list-marginless").css("li").css(".js-record-user-activity.js-navigate-to.srp-item").attr("data-url").value
+      house_url << li.css(".js-record-user-activity.js-navigate-to.srp-item").attr("data-url").value
+      #css(".srp-item-body").css(".srp-item-details").css("a.srp-card-anchor-overlay").attribute("href").value
       house_info << {address: home_address, price: home_price, beds: home_num_beds, baths: home_num_baths, url: house_url}
-      binding.pry
 
     end
     house_info
