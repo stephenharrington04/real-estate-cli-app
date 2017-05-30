@@ -24,6 +24,18 @@ class Scraper
     urls
   end
 
+  def baths_scraper(url)
+    doc = Nokogiri::HTML(open(url))
+    baths = []
+    counter = 1
+    site = doc.css("ul.srp-list-marginless").css("li")
+    until counter == 16
+      baths << site.css("div##{counter}.js-record-user-activity.js-navigate-to.srp-item").attr("data-baths_full").value
+      counter += 1
+    end
+    baths
+  end
+
   def index_scraper(index_url)
     counter = 0
     house_info = []
@@ -41,6 +53,7 @@ class Scraper
     end
     house_info.each do |hash|
       hash[:house_url] = url_scraper(index_url)[counter]
+      hash[:baths] = baths_scraper(index_url)[counter]
       counter += 1
     end
     house_info
