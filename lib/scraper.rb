@@ -3,6 +3,7 @@ require 'pry'
 require 'nokogiri'
 
 class Scraper
+################## SEARCH QUERY SCRAPER FUNCTIONS ########################
   #The index scraper should take in an index_url as an argument
     #want to scrape:
       #the address
@@ -14,10 +15,9 @@ class Scraper
     doc = Nokogiri::HTML(open(url))
     urls = []
     counter = 1
-    site = doc.css("ul.srp-list-marginless").css("li")
     until counter == 16
       house_url = "http://www.realtor.com"
-      house_url << site.css("div##{counter}.js-record-user-activity.js-navigate-to.srp-item").attr("data-url").value
+      house_url << doc.css("ul.srp-list-marginless").css("li").css("div##{counter}.js-record-user-activity.js-navigate-to.srp-item").attr("data-url").value
       urls << house_url
       counter += 1
     end
@@ -28,9 +28,8 @@ class Scraper
     doc = Nokogiri::HTML(open(url))
     baths = []
     counter = 1
-    site = doc.css("ul.srp-list-marginless").css("li")
     until counter == 16
-      baths << site.css("div##{counter}.js-record-user-activity.js-navigate-to.srp-item").attr("data-baths_full").value
+      baths << doc.css("ul.srp-list-marginless").css("li").css("div##{counter}.js-record-user-activity.js-navigate-to.srp-item").attr("data-baths_full").value
       counter += 1
     end
     baths
@@ -40,7 +39,7 @@ class Scraper
     counter = 0
     house_info = []
     doc = Nokogiri::HTML(open(index_url))
-    doc.css(".properties").css(".row").css(".srp-list").css("ul.srp-list-marginless").css("li").each do |listing|
+    doc.css("ul.srp-list-marginless").css("li").each do |listing|
       street_address = listing.css(".srp-item-body").css(".srp-item-address").css(".listing-street-address").text
       city_address = listing.css(".srp-item-body").css(".srp-item-address").css(".listing-city").text
       state_address = listing.css(".srp-item-body").css(".srp-item-address").css(".listing-region").text
@@ -48,16 +47,18 @@ class Scraper
       home_address = "#{street_address} #{city_address}, #{state_address}, #{postal_address}"
       home_price = listing.css(".srp-item-body").css(".srp-item-price").css(".data-price-display").text
       home_num_beds = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value.meta-beds").text
-      #home_num_baths = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li")[1].css("span.data-value").text
       house_info << {address: home_address, price: home_price, beds: home_num_beds} if home_address != " , , "
     end
     house_info.each do |hash|
-      hash[:house_url] = url_scraper(index_url)[counter]
       hash[:baths] = baths_scraper(index_url)[counter]
+      hash[:house_url] = url_scraper(index_url)[counter]
       counter += 1
     end
     house_info
   end
+
+
+################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
   #The home scraper should take in the url for the house created from the index scraper
     #want to scrape:
       #status
