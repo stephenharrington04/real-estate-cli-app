@@ -61,11 +61,22 @@ class Scraper
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
   #The home scraper should take in the url for the house created from the index scraper
     #want to scrape:
+      #address
       #status
       #price/sq ft
       #days on realtor.com
       #year built
       #description
+
+  def house_scraper(url)
+    address_info = []
+    doc = Nokogiri::HTML(open(url))
+    address = doc.css(".page-content").css(".container-ldp").css(".container").css(".row-wrapper-detail").css(".row").css(".col-lg-9").css(".listing-section").css("h2").css("span.visible-lg-inline").text.gsub("for ", "")
+    #address = address.gsub("for ", "")
+    
+    binding.pry
+  end
+
 
 
   #def house_scraper(house_url)
@@ -84,6 +95,6 @@ class Scraper
 end
 
 m = Scraper.new
-m.index_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
-m.url_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
-binding.pry
+#m.index_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
+#m.url_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
+m.house_scraper("http://www.realtor.com/realestateandhomes-detail/712-N-Bel-Arbor-St_Derby_KS_67037_M71821-64093")
