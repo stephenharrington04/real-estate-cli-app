@@ -54,15 +54,23 @@ class Scraper
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
 
   def listing_scraper(listing_url)
-    listing_info = []
+    listing_info = {}
+    facts = []
     doc = Nokogiri::HTML(open(listing_url))
     basic_noko = doc.css(".page-content").css(".container-ldp").css(".container").css(".row-wrapper-detail").css(".row").css(".col-lg-9").css(".listing-section")
     detailed_noko = basic_noko.css(".listing-subsection")
-    listing_info << basic_noko.css("h2").css("span.visible-lg-inline").text.gsub("for ", "")
     detailed_noko.css(".ldp-detail-key-facts").css("ul").css("li").css(".key-fact-data").collect do |fact|
-      listing_info << fact.text
+      facts << fact.text
     end
-    listing_info << detailed_noko.css(".margin-top-lg").css("p").first.text
+    listing_info[:address] = basic_noko.css("h2").css("span.visible-lg-inline").text.gsub("for ", "")
+    listing_info[:status] = facts[0]
+    listing_info[:price_per_sqft] = facts[1]
+    listing_info[:days_on_market] = facts[2]
+    listing_info[:year_built] = facts [3]
+    listing_info[:property_type] = facts [4]
+    listing_info[:description] = detailed_noko.css(".margin-top-lg").css("p").first.text
+    listing_info
+    binding.pry
   end
 
 end
