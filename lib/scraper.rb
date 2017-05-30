@@ -73,10 +73,11 @@ class Scraper
     doc = Nokogiri::HTML(open(url))
     website_basic = doc.css(".page-content").css(".container-ldp").css(".container").css(".row-wrapper-detail").css(".row").css(".col-lg-9").css(".listing-section")
     website_details = website_basic.css(".listing-subsection").css(".ldp-detail-key-facts").css("ul")
-    address = website_basic.css("h2").css("span.visible-lg-inline").text.gsub("for ", "")
+    address_info << website_basic.css("h2").css("span.visible-lg-inline").text.gsub("for ", "")
     website_details.css("li").css(".key-fact-data").collect do |fact|
       address_info << fact.text
     end
+    address_info << website_basic.css(".listing-subsection").css(".margin-top-lg").css("p").first.text
     binding.pry
   end
 
@@ -100,4 +101,4 @@ end
 m = Scraper.new
 #m.index_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
 #m.url_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
-m.house_scraper("http://www.realtor.com/realestateandhomes-detail/712-N-Bel-Arbor-St_Derby_KS_67037_M71821-64093")
+m.house_scraper("http://www.realtor.com/realestateandhomes-detail/929-E-Lost-Hills-Ct_Derby_KS_67037_M74395-08416")
