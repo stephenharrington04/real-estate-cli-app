@@ -71,9 +71,12 @@ class Scraper
   def house_scraper(url)
     address_info = []
     doc = Nokogiri::HTML(open(url))
-    address = doc.css(".page-content").css(".container-ldp").css(".container").css(".row-wrapper-detail").css(".row").css(".col-lg-9").css(".listing-section").css("h2").css("span.visible-lg-inline").text.gsub("for ", "")
-    #address = address.gsub("for ", "")
-    
+    website_basic = doc.css(".page-content").css(".container-ldp").css(".container").css(".row-wrapper-detail").css(".row").css(".col-lg-9").css(".listing-section")
+    website_details = website_basic.css(".listing-subsection").css(".ldp-detail-key-facts").css("ul")
+    address = website_basic.css("h2").css("span.visible-lg-inline").text.gsub("for ", "")
+    website_details.css("li").css(".key-fact-data").collect do |fact|
+      address_info << fact.text
+    end
     binding.pry
   end
 
