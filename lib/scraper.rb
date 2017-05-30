@@ -53,13 +53,30 @@ class Scraper
 
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
 
+  def basic_info_scraper(listing_url)
+    data = {}
+    info = []
+    doc = Nokogiri::HTML(open(listing_url))
+    main = doc.css(".page-content").css(".container-ldp").css(".container").css(".row-wrapper-detail").css(".row").css(".col-lg-9").css(".listing-header").css(".listing-header-main").css(".row").css(".col-sm-7").css(".pull-left")
+    sections = main.css(".ldp-header-meta").css("ul").css("li")
+    sections.css("span").each do |item|
+      info << item.text
+    end
+    data[:address] = main.css(".ldp-header-address-wrapper").first.children.css("div").first.attr("content")
+    data[:beds] = info[0]
+    data[:baths] = info[1]
+    data[:sqft] = info[2]
+    data[:acres] = info[3]
+    binding.pry
+  end
+
   def listing_scraper(listing_url)
     listing_info = {}
     facts = []
     doc = Nokogiri::HTML(open(listing_url))
     basic_noko = doc.css(".page-content").css(".container-ldp").css(".container").css(".row-wrapper-detail").css(".row").css(".col-lg-9").css(".listing-section")
     detailed_noko = basic_noko.css(".listing-subsection")
-    detailed_noko.css(".ldp-detail-key-facts").css("ul").css("li").css(".key-fact-data").collect do |fact|
+    detailed_noko.css(".ldp-detail-key-facts").css("ul").css("li").css(".key-fact-data").each do |fact|
       facts << fact.text
     end
     listing_info[:address] = basic_noko.css("h2").css("span.visible-lg-inline").text.gsub("for ", "")
@@ -70,7 +87,6 @@ class Scraper
     listing_info[:property_type] = facts [4]
     listing_info[:description] = detailed_noko.css(".margin-top-lg").css("p").first.text
     listing_info
-    binding.pry
   end
 
 end
@@ -78,5 +94,4 @@ end
 m = Scraper.new
 #m.index_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
 #m.url_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
-m.listing_scraper("http://www.realtor.com/realestateandhomes-detail/929-E-Lost-Hills-Ct_Derby_KS_67037_M74395-08416")
-binding.pry
+m.basic_info_scraper("http://www.realtor.com/realestateandhomes-detail/929-E-Lost-Hills-Ct_Derby_KS_67037_M74395-08416")
