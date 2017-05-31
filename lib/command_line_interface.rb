@@ -14,15 +14,13 @@ class CommandLineInterface
     search_criteria = User_inputs.new
     parsed_criteria = Parser.new(search_criteria)
     criteria_url = Url_creator.new(parsed_criteria)
-    Scraper.search_results_scraper(criteria_url.url)
+    listings_array = Scraper.search_results_scraper(criteria_url.url)
+    Listing.create_from_collection(listings_array)
   end
 
   def display_search_results
-    listings_array = listings_query_results
-    listings_array.each do |listing_hash|
-      listing_hash.each do |key, value|
-        puts "#{key}: #{value}"
-      end
+    results.each do |listing|
+      puts "#{key}: #{value}"
     end
     binding.pry
   end
