@@ -6,7 +6,7 @@ class Scraper
 
 ################## SEARCH QUERY SCRAPER FUNCTIONS ########################
 
-  def search_results_scraper(results_url)
+  def self.search_results_scraper(results_url)
     listings_info = []
     doc = Nokogiri::HTML(open(results_url))
     doc.css("ul.srp-list-marginless").css("li").each do |listing|
@@ -32,7 +32,7 @@ class Scraper
 
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
 
-  def listing_scraper(listing_url)
+  def self.listing_scraper(listing_url)
     listing_info = {}
     facts = []
     doc = Nokogiri::HTML(open(listing_url))
