@@ -21,13 +21,19 @@ class CommandLineInterface
     parsed_criteria = Parser.new(search_criteria)
     criteria_url = Url_creator.new(parsed_criteria)
     listings_array = Scraper.search_results_scraper(criteria_url.url)
+    listings_query_results if listings_array.first == "404 Error"
     Listing.create_from_collection(listings_array)
   end
 
   def display_search_results
     counter = 1
-    if Listing.all.first.address == ""
+    if Listing.all == []
+      puts ""
+      puts ""
       puts "No results found.  Please enter new search criteria."
+      puts ""
+      puts ""
+      listings_query_results
     else
       Listing.all.each do |listing|
         puts "(#{counter})"
