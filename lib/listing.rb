@@ -12,4 +12,8 @@ class Listing
     listings_array.each {|hash| Listing.new(hash)}
   end
 
+  def self.all
+    @@all
+  end
+
 end
