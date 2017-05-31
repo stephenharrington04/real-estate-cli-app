@@ -8,7 +8,7 @@ require 'pry'
 class CommandLineInterface
   def run
     listings_query_results
-
+    display_search_results
   end
 
   def listings_query_results
@@ -20,11 +20,15 @@ class CommandLineInterface
   end
 
   def display_search_results
-    counter = 0
+    counter = 1
     Listing.all.each do |listing|
       puts "(#{counter})"
-      puts "   Address: #{address}"
-      puts "   Price:  #{price}"
+      puts "   Address: #{listing.address}"
+      puts "   Price:  #{listing.price}"
+      puts "   # Of Bedrooms:  #{listing.beds}"
+      puts "   # Of Bathrooms:  #{listing.baths}"
+      puts "   Property Type:  #{listing.property_type}"
+      puts "   Listing URL:  #{listing.house_url}"
       counter += 1
     end
     binding.pry
@@ -33,4 +37,4 @@ class CommandLineInterface
   #address: listing_address, price: listing_price, beds: listing_num_beds, baths: listing_num_baths, property_type: listing_prop_type, house_url: listing_url
 
 end
-m = CommandLineInterface.new.display_search_results
+m = CommandLineInterface.new.run
