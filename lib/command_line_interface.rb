@@ -2,6 +2,7 @@ require_relative "../lib/user_inputs.rb"
 require_relative "../lib/parser.rb"
 require_relative "../lib/url_creator.rb"
 require_relative "../lib/scraper.rb"
+require_relative "../lib/listing.rb"
 require 'pry'
 
 class CommandLineInterface
@@ -19,11 +20,17 @@ class CommandLineInterface
   end
 
   def display_search_results
-    results.each do |listing|
-      puts "#{key}: #{value}"
+    counter = 0
+    Listing.all.each do |listing|
+      puts "(#{counter})"
+      puts "   Address: #{address}"
+      puts "   Price:  #{price}"
+      counter += 1
     end
     binding.pry
   end
+
+  #address: listing_address, price: listing_price, beds: listing_num_beds, baths: listing_num_baths, property_type: listing_prop_type, house_url: listing_url
 
 end
 m = CommandLineInterface.new.display_search_results
