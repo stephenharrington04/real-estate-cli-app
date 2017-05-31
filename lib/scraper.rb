@@ -18,17 +18,6 @@ class Scraper
     urls
   end
 
-  def baths_scraper(url)
-    doc = Nokogiri::HTML(open(url))
-    baths = []
-    counter = 1
-    until counter == 16
-      baths << doc.css("ul.srp-list-marginless").css("li").css("div##{counter}.js-record-user-activity.js-navigate-to.srp-item").attr("data-baths_full").value
-      counter += 1
-    end
-    baths
-  end
-
   def index_scraper(index_url)
     counter = 0
     house_info = []
@@ -44,11 +33,9 @@ class Scraper
       home_num_beds = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value.meta-beds").text
       prop_type = listing.css(".srp-item-body").css(".srp-item-details").css(".srp-item-type").css("span").text
       home_baths = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li[data-label='property-meta-baths']").css("span").text
-      #.css("li.data-value.meta-baths").css("span")
       house_info << {address: home_address, price: home_price, beds: home_num_beds, baths: home_baths, property_type: prop_type} if home_address != " , , "
     end
     house_info.each do |hash|
-      #hash[:baths] = baths_scraper(index_url)[counter]
       hash[:house_url] = url_scraper(index_url)[counter]
       counter += 1
     end
