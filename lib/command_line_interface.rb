@@ -10,6 +10,7 @@ class CommandLineInterface
     welcome_message
     listings_query_results
     display_search_results
+
   end
 
   def welcome_message
@@ -47,6 +48,13 @@ class CommandLineInterface
       end
       binding.pry
     end
+  end
+
+  def second_tier_inputs
+    if User_inputs.query_mod == "n"
+      #logic
+    else
+      User_inputs.fine_tune
   end
 
 end
