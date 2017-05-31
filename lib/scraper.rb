@@ -34,21 +34,26 @@ class Scraper
     house_info = []
     doc = Nokogiri::HTML(open(index_url))
     doc.css("ul.srp-list-marginless").css("li").each do |listing|
-      street_address = listing.css(".srp-item-body").css(".srp-item-address").css(".listing-street-address").text
-      city_address = listing.css(".srp-item-body").css(".srp-item-address").css(".listing-city").text
-      state_address = listing.css(".srp-item-body").css(".srp-item-address").css(".listing-region").text
-      postal_address = listing.css(".srp-item-body").css(".srp-item-address").css(".listing-postal").text
+      address_noko = listing.css(".srp-item-body").css(".srp-item-address")
+      street_address = address_noko.css(".listing-street-address").text
+      city_address = address_noko.css(".listing-city").text
+      state_address = address_noko.css(".listing-region").text
+      postal_address = address_noko.css(".listing-postal").text
       home_address = "#{street_address} #{city_address}, #{state_address}, #{postal_address}"
       home_price = listing.css(".srp-item-body").css(".srp-item-price").css(".data-price-display").text
       home_num_beds = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value.meta-beds").text
-      house_info << {address: home_address, price: home_price, beds: home_num_beds} if home_address != " , , "
+      prop_type = listing.css(".srp-item-body").css(".srp-item-details").css(".srp-item-type").css("span").text
+      home_baths = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li[data-label='property-meta-baths']").css("span").text
+      #.css("li.data-value.meta-baths").css("span")
+      house_info << {address: home_address, price: home_price, beds: home_num_beds, baths: home_baths, property_type: prop_type} if home_address != " , , "
     end
     house_info.each do |hash|
-      hash[:baths] = baths_scraper(index_url)[counter]
+      #hash[:baths] = baths_scraper(index_url)[counter]
       hash[:house_url] = url_scraper(index_url)[counter]
       counter += 1
     end
     house_info
+    binding.pry
   end
 
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
@@ -76,14 +81,12 @@ class Scraper
     listing_info[:year_built] = facts [3]
     listing_info[:property_type] = facts [4]
     listing_info[:description] = detailed_noko.css(".margin-top-lg").css("p").first.text
-    binding.pry
-
     listing_info
   end
 
 end
 
 m = Scraper.new
-#m.index_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
+m.index_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
 #m.url_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
 m.listing_scraper("http://www.realtor.com/realestateandhomes-detail/2400-N-Sawgrass-Ct_Derby_KS_67037_M80297-52062")
