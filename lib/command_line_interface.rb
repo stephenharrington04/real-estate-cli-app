@@ -26,20 +26,22 @@ class CommandLineInterface
 
   def display_search_results
     counter = 1
-    Listing.all.each do |listing|
-      puts "(#{counter})"
-      puts "   Address: #{listing.address}"
-      puts "   Price:  #{listing.price}"
-      puts "   # Of Bedrooms:  #{listing.beds}"
-      puts "   # Of Bathrooms:  #{listing.baths}"
-      puts "   Property Type:  #{listing.property_type}"
-      puts "   Listing URL:  #{listing.house_url}"
-      counter += 1
+    if Listing.all.first.address == ""
+      puts "No results found.  Please enter new search criteria."
+    else
+      Listing.all.each do |listing|
+        puts "(#{counter})"
+        puts "   Address: #{listing.address}"
+        puts "   Price:  #{listing.price}"
+        puts "   # Of Bedrooms:  #{listing.beds}"
+        puts "   # Of Bathrooms:  #{listing.baths}"
+        puts "   Property Type:  #{listing.property_type}"
+        puts "   Listing URL:  #{listing.house_url}"
+        counter += 1
+      end
+      binding.pry
     end
-    binding.pry
   end
-
-  #address: listing_address, price: listing_price, beds: listing_num_beds, baths: listing_num_baths, property_type: listing_prop_type, house_url: listing_url
 
 end
 m = CommandLineInterface.new.run
