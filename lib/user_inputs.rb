@@ -165,10 +165,8 @@ class User_inputs
   end
 
   def self.fine_tune
-    puts "Do you want to get more information about one of the listings?"
-    input = gets.strip
-    if input == "y"
-      puts "For which listing do you want more information?"
+    puts "For which listing do you want more information?"
+    which_listing = gets.strip
   end
 
 end

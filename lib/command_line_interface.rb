@@ -51,10 +51,16 @@ class CommandLineInterface
   end
 
   def second_tier_inputs
-    if User_inputs.query_mod == "n"
-      #logic
-    else
-      User_inputs.fine_tune
+    num_of_listings = Listing.all.size
+    if User_inputs.query_mod == "y"
+      if User_inputs.fine_tune != ["1..#{num_of_listings.to_s}"]
+        if num_of_listings !< 2
+          puts "Please enter a number between 1 and #{num_of_listings.to_s}."
+        else
+          puts "You can only select 1"
+        end
+      else
+
   end
 
 end
