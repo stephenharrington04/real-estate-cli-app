@@ -7,8 +7,13 @@ require 'pry'
 
 class CommandLineInterface
   def run
+    welcome_message
     listings_query_results
     display_search_results
+  end
+
+  def welcome_message
+    puts "Welcome to the Real Estate Application!"
   end
 
   def listings_query_results

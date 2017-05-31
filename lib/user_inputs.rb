@@ -13,12 +13,12 @@ class User_inputs
 
   def zip_code?
     zip = ""
-    until zip.chars.size == 5
+    until zip.scan(/\d/).size == 5 && zip.chars.size == 5
       puts "Enter the 5 digit zip code for which you are interested in buying a home."
       zip = gets.strip
-      if zip.chars.size != 5
+      if zip.scan(/\d/).size != 5 || zip.chars.size != 5
         puts ""
-        puts "Zip codes must be 5 digits long."
+        puts "Zip codes must be 5 digits long and must be numbers."
         puts ""
         puts ""
       end
