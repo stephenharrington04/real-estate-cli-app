@@ -3,27 +3,14 @@ require 'pry'
 require 'nokogiri'
 
 class Scraper
+
 ################## SEARCH QUERY SCRAPER FUNCTIONS ########################
 
-  def url_scraper(url)
-    doc = Nokogiri::HTML(open(url))
-    urls = []
-    counter = 1
-    until counter == 16
-      house_url = "http://www.realtor.com"
-      house_url << doc.css("ul.srp-list-marginless").css("li").css("div##{counter}.js-record-user-activity.js-navigate-to.srp-item").attr("data-url").value
-      urls << house_url
-      counter += 1
-    end
-    urls
-  end
-
   def index_scraper(index_url)
-    #counter = 0
     house_info = []
     doc = Nokogiri::HTML(open(index_url))
     doc.css("ul.srp-list-marginless").css("li").each do |listing|
-      #url = "http://www.realtor.com"
+      url = "http://www.realtor.com"
       address_noko = listing.css(".srp-item-body").css(".srp-item-address")
       street_address = address_noko.css(".listing-street-address").text
       city_address = address_noko.css(".listing-city").text
@@ -35,15 +22,10 @@ class Scraper
       prop_type = listing.css(".srp-item-body").css(".srp-item-details").css(".srp-item-type").css("span").text
       home_baths = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li[data-label='property-meta-baths']").css("span").text
       if listing.css(".srp-item-body").css(".srp-item-details a").first != nil
-        url = listing.css(".srp-item-body").css(".srp-item-details a").first["href"]
+        url << listing.css(".srp-item-body").css(".srp-item-details a").first["href"]
       end
       house_info << {address: home_address, price: home_price, beds: home_num_beds, baths: home_baths, property_type: prop_type, house_url: url} if home_address != " , , "
-
     end
-    #house_info.each do |hash|
-    #  hash[:house_url] = url_scraper(index_url)[counter]
-    #  counter += 1
-    #end
     house_info
     binding.pry
   end
