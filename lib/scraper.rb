@@ -27,7 +27,6 @@ class Scraper
       listings_info << {address: listing_address, price: listing_price, beds: listing_num_beds, baths: listing_num_baths, property_type: listing_prop_type, house_url: listing_url} if listing_address != " , , "
     end
     listings_info
-    binding.pry
   end
 
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
@@ -59,8 +58,3 @@ class Scraper
   end
 
 end
-
-m = Scraper.new
-m.search_results_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
-#m.url_scraper("http://www.realtor.com/realestateandhomes-search/67037/beds-1/type-single-family-home/price-250000-400000")
-m.listing_scraper("http://www.realtor.com/realestateandhomes-detail/2400-N-Sawgrass-Ct_Derby_KS_67037_M80297-52062")
