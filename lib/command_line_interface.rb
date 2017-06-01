@@ -26,6 +26,16 @@ class CommandLineInterface
     Listing.create_from_collection(listings_array)
   end
 
+  def display_search_parameters(inputs)
+    y_or_n = ""
+    puts "These are the search parameters you've entered:"
+    inputs.inputs_array.each {|parameter| puts "#{parameter}"}
+    puts "Would you like to change any of these parameters?"
+    until y_or_n.downcase == "y" || "n"
+      puts "Please enter 'Y' or 'N'."
+       
+  end
+
   def display_search_results
     counter = 1
     if Listing.all == []

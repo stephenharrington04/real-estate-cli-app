@@ -9,6 +9,7 @@ class User_inputs
     @bedrooms = self.bedrooms?
     @bathrooms = self.bathrooms?
     @property_type = self.property_type?
+    @inputs_array = []
   end
 
   def zip_code?
@@ -23,6 +24,7 @@ class User_inputs
         puts ""
       end
     end
+    inputs_array << zip
     zip
   end
 
@@ -48,6 +50,7 @@ class User_inputs
       end
     end
     min_p = nil if min_p == "0"
+    inputs_array << min_p
     min_p
   end
 
@@ -73,6 +76,7 @@ class User_inputs
       end
     end
     max_p = nil if max_p == "any"
+    inputs_array << max_p
     max_p
   end
 
@@ -98,6 +102,7 @@ class User_inputs
       end
     end
     beds = nil if beds == "any"
+    inputs_array << beds
     beds
   end
 
@@ -123,6 +128,7 @@ class User_inputs
       end
     end
     baths = nil if baths == "any"
+    inputs_array << baths
     baths
   end
 
@@ -148,6 +154,7 @@ class User_inputs
       end
     end
     p_type = nil if p_type == "any"
+    inputs_array << p_type
     p_type
   end
 
