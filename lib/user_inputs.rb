@@ -151,6 +151,13 @@ class User_inputs
     p_type
   end
 
+  def change_attribute(attributes_hash)
+    attributes_hash.each do |key, value|
+      self.send("#{key}=", value)
+    end
+    self
+  end
+
   def self.query_mod
     query = ""
     puts "Do you want to start a new search?"
