@@ -51,14 +51,18 @@ class CommandLineInterface
   end
 
   def mod_search_parameters(inputs)
+    valid_types = []
     mod_input = ""
     valid_parameter_types = ["Zip Code", "Min Price", "Max Price", "Bedrooms", "Bathrooms", "Property Type"]
     puts "Which search parameter would you like to modify?"
     until mod_input != ""
-      valid_parameter_types.each {|type| print "#{type}"}
+      puts ""
+      valid_parameter_types.each {|type| print "     #{type}"}
+      puts ""
       puts ""
       input = gets.strip.downcase
-      if valid_parameter_types.include?(input)
+      valid_parameter_types.each {|type| valid_types << type.downcase}
+      if valid_types.include?(input)
         mod_input = input
       else
         puts "Please enter a valid selection from the list below:"
