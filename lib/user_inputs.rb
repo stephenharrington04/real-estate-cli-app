@@ -1,6 +1,6 @@
 class User_inputs
 
-  attr_accessor :zip_code, :min_price, :max_price, :bedrooms, :bathrooms, :property_type
+  attr_accessor :zip_code, :min_price, :max_price, :bedrooms, :bathrooms, :property_type, :inputs_hash
 
   def initialize
     @inputs_hash = {}
@@ -49,7 +49,6 @@ class User_inputs
         puts "Please enter a valid min-price from the list below:"
       end
     end
-    min_p = nil if min_p == "0"
     @inputs_hash[:min_p] = min_p
     min_p
   end
@@ -75,7 +74,6 @@ class User_inputs
         puts "Please enter a valid max-price from the list below:"
       end
     end
-    max_p = nil if max_p == "any"
     @inputs_hash[:max_p] = max_p
     max_p
   end
@@ -101,7 +99,6 @@ class User_inputs
         puts "Please enter a valid input from the list below:"
       end
     end
-    beds = nil if beds == "any"
     @inputs_hash[:beds] = beds
     beds
   end
@@ -127,7 +124,6 @@ class User_inputs
         puts "Please enter a valid input from the list below:"
       end
     end
-    baths = nil if baths == "any"
     @inputs_hash[:baths] = baths
     baths
   end
@@ -153,7 +149,6 @@ class User_inputs
         puts "Please enter a valid input from the list below:"
       end
     end
-    p_type = nil if p_type == "any"
     @inputs_hash[:p_type] = p_type
     p_type
   end

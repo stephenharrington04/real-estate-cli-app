@@ -32,7 +32,7 @@ class CommandLineInterface
     puts "These are the search parameters you've entered:"
     inputs.inputs_hash.each {|key, parameter| puts "#{parameter}"}
     puts "Would you like to change any of these parameters?"
-    until y_or_n == "y" || "n"
+    until y_or_n == "y" || y_or_n == "n"
       puts "Please enter 'Y' or 'N'."
       y_or_n = gets.strip.downcase
     end
@@ -52,20 +52,21 @@ class CommandLineInterface
         puts "Please enter a valid selection from the list below:"
       end
     end
-    when mod_input
-      case "zip code"
+    case mod_input
+      when "zip code"
         inputs.zip_code?
-      case "min price"
+      when "min price"
         inputs.min_price?
-      case "max price"
+      when "max price"
         inputs.max_price?
-      case "bedrooms"
+      when "bedrooms"
         inputs.bedrooms?
-      case "bathrooms"
+      when "bathrooms"
         inputs.bathrooms?
-      case "property type"
+      when "property type"
         inputs.property_type?
     end
+    inputs
   end
 
   def display_search_results
@@ -88,7 +89,6 @@ class CommandLineInterface
         puts "   Listing URL:  #{listing.house_url}"
         counter += 1
       end
-      binding.pry
     end
   end
 
@@ -110,18 +110,19 @@ class CommandLineInterface
     which_listing = gets.strip
   end
 
-  def second_tier_inputs
-    num_of_listings = Listing.all.size
-    if User_inputs.query_mod == "y"
-      if User_inputs.fine_tune != ["1..#{num_of_listings.to_s}"]
-        if num_of_listings !< 2
-          puts "Please enter a number between 1 and #{num_of_listings.to_s}."
-        else
-          puts "You can only select 1"
-        end
-      else
-
-  end
+  #def second_tier_inputs
+  #  num_of_listings = Listing.all.size
+  #  if User_inputs.query_mod == "y"
+  #    if User_inputs.fine_tune != ["1..#{num_of_listings.to_s}"]
+  #      if num_of_listings <= 1
+  #        puts "Please enter a number between 1 and #{num_of_listings.to_s}."
+  #      else
+  #        puts "You can only select 1"
+  #      end
+  #    else
+#
+  #end
 
 end
 m = CommandLineInterface.new.run
+binding.pry

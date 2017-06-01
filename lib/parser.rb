@@ -23,11 +23,11 @@ class Parser
 
   def price_parse(min_p, max_p)
     price = ""
-    if min_p == nil && max_p == nil
+    if min_p == "0" && max_p == "any"
       price = nil
-    elsif min_p == nil && max_p != nil
+    elsif min_p == "0" && max_p != "any"
       price = "price-na-#{max_p}"
-    elsif min_p != nil && max_p == nil
+    elsif min_p != "0" && max_p == "any"
       price = "price-#{min_p}-na"
     else
       price = "price-#{min_p}-#{max_p}"
@@ -38,7 +38,7 @@ class Parser
   def bedrooms_parse(bedrooms)
     beds = ""
     case bedrooms
-    when nil
+    when "any"
       beds = nil
     when "studio"
       beds = "beds-studio"
@@ -59,7 +59,7 @@ class Parser
   def bathrooms_parse(bathrooms)
     baths = ""
     case bathrooms
-    when nil
+    when "any"
       baths = nil
     when "1+"
       baths = "baths-1"
@@ -78,7 +78,7 @@ class Parser
   def property_parse(property_type)
     type = ""
     case property_type
-    when nil
+    when "any"
       type = nil
     when "single family home"
       type = "type-single-family-home"
