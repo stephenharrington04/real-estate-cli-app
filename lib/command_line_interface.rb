@@ -22,9 +22,12 @@ class CommandLineInterface
     search_criteria = User_inputs.new
     parsed_criteria = Parser.new(search_criteria)
     criteria_url = Url_creator.new(parsed_criteria)
-    listings_array = Scraper.search_results_scraper(criteria_url.url)
-    listings_query_results if listings_array.first == "404 Error"
-    Listing.create_from_collection(listings_array)
+    if Scraper.checker(criteria_url.url) != "404 Error"
+      listings_array = Scraper.search_results_scraper(criteria_url.url)
+      Listing.create_from_collection(listings_array)
+    else
+      listings_query_results
+    end
   end
 
   def display_search_parameters(inputs)
