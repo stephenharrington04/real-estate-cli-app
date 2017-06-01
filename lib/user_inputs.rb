@@ -3,13 +3,13 @@ class User_inputs
   attr_accessor :zip_code, :min_price, :max_price, :bedrooms, :bathrooms, :property_type
 
   def initialize
+    @inputs_hash = {}
     @zip_code = self.zip_code?
     @min_price = self.min_price?
     @max_price = self.max_price?
     @bedrooms = self.bedrooms?
     @bathrooms = self.bathrooms?
     @property_type = self.property_type?
-    @inputs_hash = {}
   end
 
   def zip_code?
@@ -24,7 +24,7 @@ class User_inputs
         puts ""
       end
     end
-    inputs_hash[zip:] = zip
+    @inputs_hash[:zip] = zip
     zip
   end
 
@@ -50,7 +50,7 @@ class User_inputs
       end
     end
     min_p = nil if min_p == "0"
-    inputs_hash[min_p:] = min_p
+    @inputs_hash[:min_p] = min_p
     min_p
   end
 
@@ -76,7 +76,7 @@ class User_inputs
       end
     end
     max_p = nil if max_p == "any"
-    inputs_hash[max_p:] = max_p
+    @inputs_hash[:max_p] = max_p
     max_p
   end
 
@@ -102,7 +102,7 @@ class User_inputs
       end
     end
     beds = nil if beds == "any"
-    inputs_hash[beds:] = beds
+    @inputs_hash[:beds] = beds
     beds
   end
 
@@ -128,7 +128,7 @@ class User_inputs
       end
     end
     baths = nil if baths == "any"
-    inputs_hash[baths:] = baths
+    @inputs_hash[:baths] = baths
     baths
   end
 
@@ -154,7 +154,7 @@ class User_inputs
       end
     end
     p_type = nil if p_type == "any"
-    inputs_hash[p_type:] = p_type
+    @inputs_hash[:p_type] = p_type
     p_type
   end
 
