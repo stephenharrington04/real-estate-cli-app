@@ -45,15 +45,26 @@ class CommandLineInterface
     until mod_input != ""
       valid_parameter_types.each {|type| print "#{type}"}
       input = gets.strip.downcase
-      if valid_parameter_types.include?(input)
+      if valid_parameter_types.downcase.include?(input)
         mod_input = input
       else
         puts "Please enter a valid selection from the list below:"
       end
     end
     when mod_input
-      case "Zip Code"
+      case "zip code"
         inputs.zip_code?
+      case "min price"
+        inputs.min_price?
+      case "max price"
+        inputs.max_price?
+      case "bedrooms"
+        inputs.bedrooms?
+      case "bathrooms"
+        inputs.bathrooms?
+      case "property type"
+        inputs.property_type?
+    end
   end
 
   def display_search_results

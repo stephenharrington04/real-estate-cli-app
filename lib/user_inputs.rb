@@ -24,7 +24,7 @@ class User_inputs
         puts ""
       end
     end
-    inputs_array[zip:] = zip
+    inputs_hash[zip:] = zip
     zip
   end
 
@@ -50,7 +50,7 @@ class User_inputs
       end
     end
     min_p = nil if min_p == "0"
-    inputs_array[min_p:] = min_p
+    inputs_hash[min_p:] = min_p
     min_p
   end
 
@@ -76,7 +76,7 @@ class User_inputs
       end
     end
     max_p = nil if max_p == "any"
-    inputs_array[max_p:] = max_p
+    inputs_hash[max_p:] = max_p
     max_p
   end
 
@@ -102,7 +102,7 @@ class User_inputs
       end
     end
     beds = nil if beds == "any"
-    inputs_array[beds:] = beds
+    inputs_hash[beds:] = beds
     beds
   end
 
@@ -128,7 +128,7 @@ class User_inputs
       end
     end
     baths = nil if baths == "any"
-    inputs_array[baths:] = baths
+    inputs_hash[baths:] = baths
     baths
   end
 
@@ -154,15 +154,8 @@ class User_inputs
       end
     end
     p_type = nil if p_type == "any"
-    inputs_array[p_type:] = p_type
+    inputs_hash[p_type:] = p_type
     p_type
-  end
-
-  def change_attribute(attributes_hash)
-    attributes_hash.each do |key, value|
-      self.send("#{key}=", value)
-    end
-    self
   end
 
 end
