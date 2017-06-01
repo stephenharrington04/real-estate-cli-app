@@ -50,6 +50,24 @@ class CommandLineInterface
     end
   end
 
+  def self.query_mod
+    query = ""
+    puts "Do you want to start a new search?"
+    until query != ""
+      puts "Select 'Y' or 'N'"
+      input = gets.strip.downcase
+      if input == "y" || input == "n"
+        query = input
+      end
+    end
+    query
+  end
+
+  def self.fine_tune
+    puts "For which listing do you want more information?"
+    which_listing = gets.strip
+  end
+
   def second_tier_inputs
     num_of_listings = Listing.all.size
     if User_inputs.query_mod == "y"

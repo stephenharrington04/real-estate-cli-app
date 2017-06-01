@@ -158,22 +158,4 @@ class User_inputs
     self
   end
 
-  def self.query_mod
-    query = ""
-    puts "Do you want to start a new search?"
-    until query != ""
-      puts "Select 'Y' or 'N'"
-      input = gets.strip.downcase
-      if input == "y" || input == "n"
-        query = input
-      end
-    end
-    query
-  end
-
-  def self.fine_tune
-    puts "For which listing do you want more information?"
-    which_listing = gets.strip
-  end
-
 end
