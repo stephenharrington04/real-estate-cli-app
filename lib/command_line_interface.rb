@@ -9,7 +9,9 @@ class CommandLineInterface
   def run
     welcome_message
     inquiry = User_inputs.new
-    mod_search_parameters(inquiry) if display_search_parameters(inquiry) == "y"
+    while display_search_parameters(inquiry) == "y"
+      mod_search_parameters(inquiry)
+    end
     listings_query_results(inquiry)
     display_search_results
 
@@ -70,17 +72,17 @@ class CommandLineInterface
     end
     case mod_input
       when "zip code"
-        inputs.zip_code?
+        inputs.zip_code = inputs.zip_code?
       when "min price"
-        inputs.min_price?
+        inputs.min_price = inputs.min_price?
       when "max price"
-        inputs.max_price?
+        inputs.max_price = inputs.max_price?
       when "bedrooms"
-        inputs.bedrooms?
+        inputs.bedrooms = inputs.bedrooms?
       when "bathrooms"
-        inputs.bathrooms?
+        inputs.bathrooms = inputs.bathrooms?
       when "property type"
-        inputs.property_type?
+        inputs.property_type = inputs.property_type?
     end
     inputs
   end
@@ -108,7 +110,7 @@ class CommandLineInterface
     end
   end
 
-  def self.query_mod
+  def query_mod
     query = ""
     puts "Do you want to start a new search?"
     until query != ""
