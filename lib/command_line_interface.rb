@@ -29,7 +29,7 @@ class CommandLineInterface
   def display_search_parameters(inputs)
     y_or_n = ""
     puts "These are the search parameters you've entered:"
-    inputs.inputs_array.each {|parameter| puts "#{parameter}"}
+    inputs.inputs_hash.each {|key, parameter| puts "#{parameter}"}
     puts "Would you like to change any of these parameters?"
     until y_or_n == "y" || "n"
       puts "Please enter 'Y' or 'N'."
@@ -38,12 +38,22 @@ class CommandLineInterface
     y_or_n
   end
 
-  def mod_search_parameters
+  def mod_search_parameters(inputs)
+    mod_input = ""
     valid_parameter_types = ["Zip Code", "Min Price", "Max Price", "Bedrooms", "Bathrooms", "Property Type"]
     puts "Which search parameter would you like to modify?"
-    valid_parameter_types.each {|type| print "#{type}"}
-    mod_input = gets.strip.downcase
-
+    until mod_input != ""
+      valid_parameter_types.each {|type| print "#{type}"}
+      input = gets.strip.downcase
+      if valid_parameter_types.include?(input)
+        mod_input = input
+      else
+        puts "Please enter a valid selection from the list below:"
+      end
+    end
+    when mod_input
+      case "Zip Code"
+        inputs.zip_code?
   end
 
   def display_search_results
