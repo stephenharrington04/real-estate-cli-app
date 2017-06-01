@@ -14,7 +14,7 @@ class CommandLineInterface
     end
     listings_query_results(inquiry)
     display_search_results
-
+    query_mod
   end
 
   def welcome_message
@@ -112,18 +112,28 @@ class CommandLineInterface
 
   def query_mod
     query = ""
-    puts "Do you want to start a new search?"
-    until query != ""
-      puts "Select 'Y' or 'N'"
-      input = gets.strip.downcase
-      if input == "y" || input == "n"
+    puts ""
+    puts "Would you like to:"
+    puts "(1) Get more information about a listing"
+    puts "(2) Start a new search"
+    puts "(3) Exit"
+    until query == "1" || query == "2" || query == "3"
+      puts "Select '1' '2' or '3'"
+      input = gets.strip
+      if input == "1" || input == "2" || input == "3"
         query = input
       end
     end
-    query
+    if query == "1"
+      self.further_inquiry
+    elsif query == "2"
+      self.run
+    elsif query == "3"
+      puts "Thanks for using the Real Estate Application!"
+    end
   end
 
-  def self.fine_tune
+  def further_inquiry
     puts "For which listing do you want more information?"
     which_listing = gets.strip
   end
