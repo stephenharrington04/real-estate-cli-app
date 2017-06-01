@@ -8,7 +8,9 @@ require 'pry'
 class CommandLineInterface
   def run
     welcome_message
-    listings_query_results
+    search = User_inputs.new
+    mod_search_parameters(search) if display_search_parameters(search) == "y"
+    listings_query_results(search)
     display_search_results
 
   end
@@ -17,9 +19,8 @@ class CommandLineInterface
     puts "Welcome to the Real Estate Application!"
   end
 
-  def listings_query_results
-    search_criteria = User_inputs.new
-    parsed_criteria = Parser.new(search_criteria)
+  def listings_query_results(user_inputs)
+    parsed_criteria = Parser.new(user_inputs)
     criteria_url = Url_creator.new(parsed_criteria)
     listings_array = Scraper.search_results_scraper(criteria_url.url)
     listings_query_results if listings_array.first == "404 Error"
