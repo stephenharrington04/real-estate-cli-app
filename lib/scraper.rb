@@ -9,15 +9,15 @@ class Scraper
   def self.search_results_scraper(results_url)
     listings_info = []
     doc = Nokogiri::HTML(open(results_url))
-  rescue OpenURI::HTTPError => e
-    if e.message == "404 Not Found"
-      puts ""
-      puts "!!!!Invalid zipcode entered!!!!"
-      puts "Please enter a valid zipcode"
-      puts ""
-      listings_info << "404 Error"
-    end
-    if listings_info.first != "404 Error"
+    #rescue OpenURI::HTTPError => e
+    #  if e.message == "404 Not Found"
+    #    puts ""
+    #    puts "!!!!Invalid zipcode entered!!!!"
+    #    puts "Please enter a valid zipcode"
+    #    puts ""
+    #    listings_info << "404 Error"
+    #  end
+    #if listings_info.first != "404 Error"
       doc.css("ul.srp-list-marginless").css("li").each do |listing|
         listing_url = "http://www.realtor.com"
         address_noko = listing.css(".srp-item-body").css(".srp-item-address")
@@ -35,7 +35,7 @@ class Scraper
         end
         listings_info << {address: listing_address, price: listing_price, beds: listing_num_beds, baths: listing_num_baths, property_type: listing_prop_type, house_url: listing_url} if listing_address != " , , "
       end
-    end
+    #end
     listings_info
   end
 
