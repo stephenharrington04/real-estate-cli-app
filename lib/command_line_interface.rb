@@ -14,7 +14,14 @@ class CommandLineInterface
     end
     listings_query_results(inquiry)
     display_search_results
-    query_mod
+    if query_mod == "1"
+      il_url = more_info
+      display_individual_listing(il_url)
+    elsif query_mod == "2"
+      run
+    elsif query_mod == "3"
+      puts "Thanks for using the Real Estate Application!"
+    end
   end
 
   def welcome_message
@@ -110,6 +117,36 @@ class CommandLineInterface
     end
   end
 
+  def display_individual_listing(url)
+    i_listing_hash = Scraper.listing_scraper(url)
+    i_listing_hash.each do |key, value|
+      case key
+        when "address"
+          puts "Address:  #{value}"
+        when "beds"
+          puts "Bedrooms:  #{value}"
+        when "baths"
+          puts "Bathrooms:  #{value}"
+        when "sqft"
+          puts "Sqft:  #{value}"
+        when "acres"
+          puts "Acres:  #{value}"
+        when "status"
+          puts "Status:  #{value}"
+        when "price_per_sqft"
+          puts "Price Per Sqft:  #{value}"
+        when "days_on_market"
+          puts "Days on Markey:  #{value}"
+        when "year_built"
+          puts "Year Built:  #{value}"
+        when "property_type"
+          puts "property Type:  #{value}"
+        when "description"
+          puts "#{value}"
+      end
+    end
+  end
+
   def query_mod
     query = ""
     puts ""
@@ -124,32 +161,24 @@ class CommandLineInterface
         query = input
       end
     end
-    if query == "1"
-      self.further_inquiry
-    elsif query == "2"
-      self.run
-    elsif query == "3"
-      puts "Thanks for using the Real Estate Application!"
-    end
+    query
   end
 
-  def further_inquiry
+  def more_info
+    more = ""
+    available_numbers = Listing.all.size
+    puts "You only have one available listing" if available_numbers == 1
+    puts ""
     puts "For which listing do you want more information?"
-    which_listing = gets.strip
+    until more != ""
+      puts "Please select 1 - #{available_numbers.to_s}"
+      which_listing = gets.strip.to_i
+      if which_listing > 0 && which_listing <= available_numbers
+        more = which_listing.to_s
+      end
+    end
+    Listing.all[(more.to_i) - 1].house_url
   end
-
-  #def second_tier_inputs
-  #  num_of_listings = Listing.all.size
-  #  if User_inputs.query_mod == "y"
-  #    if User_inputs.fine_tune != ["1..#{num_of_listings.to_s}"]
-  #      if num_of_listings <= 1
-  #        puts "Please enter a number between 1 and #{num_of_listings.to_s}."
-  #      else
-  #        puts "You can only select 1"
-  #      end
-  #    else
-#
-  #end
 
 end
 m = CommandLineInterface.new.run
