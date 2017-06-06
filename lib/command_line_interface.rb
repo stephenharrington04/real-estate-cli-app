@@ -14,13 +14,25 @@ class CommandLineInterface
     end
     listings_query_results(inquiry)
     display_search_results
-    if query_mod == "1"
-      il_url = more_info
-      display_individual_listing(il_url)
-    elsif query_mod == "2"
+    next_step(query_mod)
+    #if query_mod == "1"
+    #  il_url = more_info
+    #  display_individual_listing(il_url)
+    #elsif query_mod == "2"
+    #  run
+    #elsif query_mod == "3"
+    #  puts "Thanks for using the Real Estate Application!"
+    #end
+  end
+
+  def next_step(string)
+    if string == "1"
+      display_individual_listing(more_info)
+      next_step(query_mod)
+    elsif string == "2"
       run
-    elsif query_mod == "3"
-      puts "Thanks for using the Real Estate Application!"
+    elsif string == "3"
+      puts "Thanks for using the Realy Estate Application!"
     end
   end
 
@@ -120,30 +132,31 @@ class CommandLineInterface
   def display_individual_listing(url)
     i_listing_hash = Scraper.listing_scraper(url)
     i_listing_hash.each do |key, value|
-      case key
-        when "address"
-          puts "Address:  #{value}"
-        when "beds"
-          puts "Bedrooms:  #{value}"
-        when "baths"
-          puts "Bathrooms:  #{value}"
-        when "sqft"
-          puts "Sqft:  #{value}"
-        when "acres"
-          puts "Acres:  #{value}"
-        when "status"
-          puts "Status:  #{value}"
-        when "price_per_sqft"
-          puts "Price Per Sqft:  #{value}"
-        when "days_on_market"
-          puts "Days on Markey:  #{value}"
-        when "year_built"
-          puts "Year Built:  #{value}"
-        when "property_type"
-          puts "property Type:  #{value}"
-        when "description"
-          puts "#{value}"
-      end
+      puts "#{key}:  #{value}"
+      #case key
+      #  when "address"
+      #    puts "Address:  #{value}"
+      #  when "beds"
+      #    puts "Bedrooms:  #{value}"
+      #  when "baths"
+      #    puts "Bathrooms:  #{value}"
+      #  when "sqft"
+      #    puts "Sqft:  #{value}"
+      #  when "acres"
+      #    puts "Acres:  #{value}"
+      #  when "status"
+      #    puts "Status:  #{value}"
+      #  when "price_per_sqft"
+      #    puts "Price Per Sqft:  #{value}"
+      #  when "days_on_market"
+      #    puts "Days on Markey:  #{value}"
+      #  when "year_built"
+      #    puts "Year Built:  #{value}"
+      #  when "property_type"
+      #    puts "property Type:  #{value}"
+      #  when "description"
+      #    puts "#{value}"
+      #end
     end
   end
 
@@ -154,11 +167,12 @@ class CommandLineInterface
     puts "(1) Get more information about a listing"
     puts "(2) Start a new search"
     puts "(3) Exit"
-    until query == "1" || query == "2" || query == "3"
+    until query != ""
       puts "Select '1' '2' or '3'"
       input = gets.strip
       if input == "1" || input == "2" || input == "3"
         query = input
+        binding.pry
       end
     end
     query
@@ -172,9 +186,9 @@ class CommandLineInterface
     puts "For which listing do you want more information?"
     until more != ""
       puts "Please select 1 - #{available_numbers.to_s}"
-      which_listing = gets.strip.to_i
-      if which_listing > 0 && which_listing <= available_numbers
-        more = which_listing.to_s
+      which_listing = gets.strip
+      if which_listing.to_i > 0 && which_listing.to_i <= available_numbers
+        more = which_listing
       end
     end
     Listing.all[(more.to_i) - 1].house_url
