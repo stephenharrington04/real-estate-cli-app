@@ -111,32 +111,32 @@ class CommandLineInterface
       listings_query_results
     else
       Listing.all.each do |listing|
-        puts "(#{counter})"
-        puts "   Address: #{listing.address}"
-        puts "   Price:  #{listing.price}"
-        puts "   # Of Bedrooms:  #{listing.beds}"
-        puts "   # Of Bathrooms:  #{listing.baths}"
-        puts "   Property Type:  #{listing.property_type}"
-        puts "   Listing URL:  #{listing.house_url}"
+        puts "(#{counter})".colorize(:light_blue)
+        puts "   Address:".colorize(:light_blue) + "  #{listing.address}"
+        puts "   Price:".colorize(:light_blue) + "  #{listing.price}"
+        puts "   # Of Bedrooms:".colorize(:light_blue) + "  #{listing.beds}"
+        puts "   # Of Bathrooms:".colorize(:light_blue) + "  #{listing.baths}"
+        puts "   Property Type:".colorize(:light_blue) + "  #{listing.property_type}"
+        puts "   Listing URL:".colorize(:light_blue) + "  #{listing.house_url}"
         counter += 1
       end
     end
   end
 
   def display_individual_listing(listing)
-    puts "Address: #{listing.address}"
-    puts "Price:  #{listing.price}"
-    puts "Status:  #{listing.status}"
-    puts "Year Built:  #{listing.year_built}"
-    puts "Days on Market:  #{listing.days_on_market}"
-    puts "# Of Bedrooms:  #{listing.beds}"
-    puts "# of Bathrooms:  #{listing.baths}"
-    puts "Square Feet (livable):  #{listing.sqft}"
-    puts "Acres / Sqft (property):  #{listing.acres}"
-    puts "Price per SqFt:  #{listing.price_per_sqft}"
-    puts "Property Type:  #{listing.property_type}"
-    puts "Listing URL:  #{listing.house_url}"
-    puts "Description:  #{listing.description}"
+    puts "Address:".colorize(:light_blue) + "  #{listing.address}"
+    puts "Price:".colorize(:light_blue) + "  #{listing.price}"
+    puts "Status:".colorize(:light_blue) + "  #{listing.status}"
+    puts "Year Built:".colorize(:light_blue) + "  #{listing.year_built}"
+    puts "Days on Market:".colorize(:light_blue) + "  #{listing.days_on_market}"
+    puts "# Of Bedrooms:".colorize(:light_blue) + "  #{listing.beds}"
+    puts "# of Bathrooms:".colorize(:light_blue) + "  #{listing.baths}"
+    puts "Square Feet (livable):".colorize(:light_blue) + "  #{listing.sqft}"
+    puts "Acres / Sqft (property):".colorize(:light_blue) + "  #{listing.acres}"
+    puts "Price per SqFt:".colorize(:light_blue) + "  #{listing.price_per_sqft}"
+    puts "Property Type:".colorize(:light_blue) + "  #{listing.property_type}"
+    puts "Listing URL:".colorize(:light_blue) + "  #{listing.house_url}"
+    puts "Description:".colorize(:light_blue) + "  #{listing.description}"
   end
 
   def query_mod

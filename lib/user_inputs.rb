@@ -35,11 +35,11 @@ class User_inputs
     char_count = valid_prices.join.size
     puts "Enter a min-price for the home in which you wish to purchase:"
     until min_p != ""
-      (char_count + (5 * (valid_prices.size + 1))).times {print "-"}
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-".colorize(:green)}
       puts ""
       valid_prices.each {|price| print "     #{price}"}
       puts ""
-      (char_count + (5 * (valid_prices.size + 1))).times {print "-"}
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-".colorize(:green)}
       puts ""
       input = gets.strip.gsub(",","")
       if valid_prices.include?(input)
@@ -60,11 +60,11 @@ class User_inputs
     char_count = valid_prices.join.size
     puts "Enter a max-price for the home in which you wish to purchase:"
     until max_p != ""
-      (char_count + (5 * (valid_prices.size + 1))).times {print "-"}
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-".colorize(:green)}
       puts ""
       valid_prices.each {|price| print "     #{price}"}
       puts ""
-      (char_count + (5 * (valid_prices.size + 1))).times {print "-"}
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-".colorize(:green)}
       puts ""
       input = gets.strip.downcase.gsub(",","")
       if valid_prices.include?(input)
@@ -85,11 +85,11 @@ class User_inputs
     char_count = valid_rooms.join.size
     puts "Enter the number of bedrooms for the home in which you wish to purchase:"
     until beds != ""
-      (char_count + (5 * (valid_rooms.size + 1))).times {print "-"}
+      (char_count + (5 * (valid_rooms.size + 1))).times {print "-".colorize(:green)}
       puts ""
       valid_rooms.each {|room| print "     #{room}"}
       puts ""
-      (char_count + (5 * (valid_rooms.size + 1))).times {print "-"}
+      (char_count + (5 * (valid_rooms.size + 1))).times {print "-".colorize(:green)}
       puts ""
       input = gets.strip.downcase
       if valid_rooms.include?(input)
@@ -110,11 +110,11 @@ class User_inputs
     char_count = valid_baths.join.size
     puts "Enter the number of bathrooms for the home in which you wish to purchase:"
     until baths != ""
-      (char_count + (5 * (valid_baths.size + 1))).times {print "-"}
+      (char_count + (5 * (valid_baths.size + 1))).times {print "-".colorize(:green)}
       puts ""
       valid_baths.each {|room| print "     #{room}"}
       puts ""
-      (char_count + (5 * (valid_baths.size + 1))).times {print "-"}
+      (char_count + (5 * (valid_baths.size + 1))).times {print "-".colorize(:green)}
       puts ""
       input = gets.strip.downcase
       if valid_baths.include?(input)
@@ -135,11 +135,11 @@ class User_inputs
     char_count = valid_types.join.size
     puts "Enter the type of property you wish to purchase:"
     until p_type != ""
-      (char_count + (5 * (valid_types.size + 1))).times {print "-"}
+      (char_count + (5 * (valid_types.size + 1))).times {print "-".colorize(:green)}
       puts ""
       valid_types.each {|type| print "     #{type}"}
       puts ""
-      (char_count + (5 * (valid_types.size + 1))).times {print "-"}
+      (char_count + (5 * (valid_types.size + 1))).times {print "-".colorize(:green)}
       puts ""
       input = gets.strip.downcase
       if valid_types.include?(input)

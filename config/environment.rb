@@ -3,6 +3,7 @@ Bundler.require(:default)
 require 'open-uri'
 require 'pry'
 require 'nokogiri'
+require 'colorize'
 require_relative "../lib/user_inputs.rb"
 require_relative "../lib/parser.rb"
 require_relative "../lib/url_creator.rb"
