@@ -58,18 +58,18 @@ class Scraper
     basic_noko.css(".listing-header").css(".listing-header-main").css(".row").css(".col-sm-7").css(".pull-left").css(".ldp-header-meta").css("ul").css("li").css("span").each do |item|
       facts << item.text
     end
-    listing_info["Address"] = basic_noko.css(".listing-header").css(".listing-header-main").css(".row").css(".col-sm-7").css(".pull-left").css(".ldp-header-address-wrapper").first.children.css("div").first.attr("content")
-    listing_info["Price"] = basic_noko.css(".listing-header").css(".listing-header-main").css(".row").css(".col-xs-12").css(".row").css(".ldp-header-price-wrap").css(".ldp-header-price").css(".display-inline").css("span").text.scan(/\d|\$|,/).join
-    listing_info["Beds"] = facts[5]
-    listing_info["Baths"] = facts[6]
-    listing_info["Sqft"] = facts[7]
-    listing_info["Acres"] = facts[8]
-    listing_info["Status"] = facts[0]
-    listing_info["Price Per Sqft"] = facts[1]
-    listing_info["Days on Market"] = facts[2]
-    listing_info["Year Built"] = facts [3]
-    listing_info["Property Type"] = facts [4]
-    listing_info["Description"] = detailed_noko.css(".margin-top-lg").css("p").first.text
+    listing_info[:address] = basic_noko.css(".listing-header").css(".listing-header-main").css(".row").css(".col-sm-7").css(".pull-left").css(".ldp-header-address-wrapper").first.children.css("div").first.attr("content")
+    listing_info[:price] = basic_noko.css(".listing-header").css(".listing-header-main").css(".row").css(".col-xs-12").css(".row").css(".ldp-header-price-wrap").css(".ldp-header-price").css(".display-inline").css("span").text.scan(/\d|\$|,/).join
+    listing_info[:beds] = facts[5]
+    listing_info[:baths] = facts[6]
+    listing_info[:sqft] = facts[7]
+    listing_info[:acres] = facts[8]
+    listing_info[:status] = facts[0]
+    listing_info[:price_per_sqft] = facts[1]
+    listing_info[:days_on_market] = facts[2]
+    listing_info[:year_built] = facts [3]
+    listing_info[:property_type] = facts [4]
+    listing_info[:description] = detailed_noko.css(".margin-top-lg").css("p").first.text
     listing_info
   end
 

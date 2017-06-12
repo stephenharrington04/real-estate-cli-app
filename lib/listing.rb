@@ -12,6 +12,13 @@ class Listing
     listings_array.each {|hash| Listing.new(hash)}
   end
 
+  def add_listing_attributes(attributes_hash)
+    attributes_hash.each do |key, value|
+       self.send("#{key}=", value)
+     end
+    self
+  end
+
   def self.all
     @@all
   end

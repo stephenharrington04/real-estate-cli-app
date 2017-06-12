@@ -13,7 +13,10 @@ class CommandLineInterface
 
   def next_step(string)
     if string == "1"
-      display_individual_listing(more_info)
+      i_listing = more_info
+      i_listing_hash = Scraper.listing_scraper(i_listing.house_url)
+      expanded_listing = i_listing.add_listing_attributes(i_listing_hash)
+      display_individual_listing(expanded_listing)
       next_step(query_mod)
     elsif string == "2"
       Listing.reset_all
@@ -116,9 +119,20 @@ class CommandLineInterface
     end
   end
 
-  def display_individual_listing(url)
-    i_listing_hash = Scraper.listing_scraper(url)
-    i_listing_hash.each {|key, value| puts "#{key}:  #{value}"}
+  def display_individual_listing(listing)
+    puts "Address: #{listing.address}"
+    puts "Price:  #{listing.price}"
+    puts "Status:  #{listing.status}"
+    puts "Year Built:  #{listing.year_built}"
+    puts "Days on Market:  #{listing.days_on_market}"
+    puts "# Of Bedrooms:  #{listing.beds}"
+    puts "# of Bathrooms:  #{listing.baths}"
+    puts "Square Feet (livable):  #{listing.sqft}"
+    puts "Acres / Sqft (property):  #{listing.acres}"
+    puts "Price per SqFt:  #{listing.price_per_sqft}"
+    puts "Property Type:  #{listing.property_type}"
+    puts "Listing URL:  #{listing.house_url}"
+    puts "Description:  #{listing.description}"
   end
 
   def query_mod
@@ -151,7 +165,7 @@ class CommandLineInterface
         more = which_listing
       end
     end
-    Listing.all[(more.to_i) - 1].house_url
+    Listing.all[(more.to_i) - 1]
   end
 
 end
