@@ -2,6 +2,14 @@
 class CommandLineInterface
   def run
     welcome_message
+    engine
+  end
+
+  def welcome_message
+    puts "Welcome to the Real Estate Application!"
+  end
+
+  def engine
     inquiry = User_inputs.new
     while display_search_parameters(inquiry) == "y"
       mod_search_parameters(inquiry)
@@ -20,14 +28,10 @@ class CommandLineInterface
       next_step(query_mod)
     elsif string == "2"
       Listing.reset_all
-      run
+      engine
     elsif string == "3"
       puts "Thanks for using the Realy Estate Application!"
     end
-  end
-
-  def welcome_message
-    puts "Welcome to the Real Estate Application!"
   end
 
   def new_beginning
