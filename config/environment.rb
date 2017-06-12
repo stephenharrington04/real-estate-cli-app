@@ -1,2 +1,11 @@
 require 'bundler/setup'
 Bundler.require(:default)
+require 'open-uri'
+require 'pry'
+require 'nokogiri'
+require_relative "../lib/user_inputs.rb"
+require_relative "../lib/parser.rb"
+require_relative "../lib/url_creator.rb"
+require_relative "../lib/scraper.rb"
+require_relative "../lib/listing.rb"
+require_relative "../lib/command_line_interface.rb"

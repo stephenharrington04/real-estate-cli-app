@@ -1,9 +1,3 @@
-require_relative "../lib/user_inputs.rb"
-require_relative "../lib/parser.rb"
-require_relative "../lib/url_creator.rb"
-require_relative "../lib/scraper.rb"
-require_relative "../lib/listing.rb"
-require 'pry'
 
 class CommandLineInterface
   def run
@@ -161,4 +155,3 @@ class CommandLineInterface
   end
 
 end
-m = CommandLineInterface.new.run

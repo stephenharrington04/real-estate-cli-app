@@ -1,3 +1,4 @@
+
 class User_inputs
 
   attr_accessor :zip_code, :min_price, :max_price, :bedrooms, :bathrooms, :property_type, :inputs_hash

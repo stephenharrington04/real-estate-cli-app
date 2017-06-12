@@ -1,3 +1,4 @@
+
 class Url_creator
 
   attr_reader :search_criteria, :url
@@ -6,11 +7,6 @@ class Url_creator
     @search_criteria = parsed_inputs.search_parameters
     @url = self.url_maker
   end
-
-  #basic url framework:  http://www.realtor.com/realestateandhomes-search/ZIP CODE/BEDS/BATHS/PROPERTY TYPE/PRICE RANGE
-  #http://www.realtor.com/realestateandhomes-search/  Must always be present
-  #zipcode is the only Required User_input
-  #if any of the other variables are nil, then that section will be skipped over/ommitted
 
   def url_maker
     web_address = "http://www.realtor.com/realestateandhomes-search/#{self.search_criteria[:zip]}"
