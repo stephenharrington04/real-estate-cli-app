@@ -10,8 +10,8 @@ class Scraper
     rescue OpenURI::HTTPError => e
       if e.message == "404 Not Found"
         puts ""
-        puts "!!!! INVALID ZIPCODE ENTERED !!!!"
-        puts "Please enter a valid zipcode"
+        puts "!!!! INVALID ZIPCODE ENTERED !!!!".colorize(:red)
+        puts "Please enter a valid zipcode".colorize(:red)
         puts ""
         error_message = "404 Error"
       else

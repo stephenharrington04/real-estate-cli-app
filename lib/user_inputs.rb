@@ -20,7 +20,7 @@ class User_inputs
       zip = gets.strip
       if zip.scan(/\d/).size != 5 || zip.chars.size != 5
         puts ""
-        puts "Zip codes must be 5 digits long and must be numbers."
+        puts "Zip codes must be 5 digits long and must be numbers.".colorize(:red)
         puts ""
         puts ""
       end
@@ -47,7 +47,7 @@ class User_inputs
       else
         puts ""
         puts ""
-        puts "Please enter a valid min-price from the list below:"
+        puts "Please enter a valid min-price from the list below:".colorize(:red)
       end
     end
     @inputs_hash["Min Price"] = min_p
@@ -72,7 +72,7 @@ class User_inputs
       else
         puts ""
         puts ""
-        puts "Please enter a valid max-price from the list below:"
+        puts "Please enter a valid max-price from the list below:".colorize(:red)
       end
     end
     @inputs_hash["Max Price"] = max_p
@@ -97,7 +97,7 @@ class User_inputs
       else
         puts ""
         puts ""
-        puts "Please enter a valid input from the list below:"
+        puts "Please enter a valid input from the list below:".colorize(:red)
       end
     end
     @inputs_hash["Bedrooms"] = beds
@@ -122,7 +122,7 @@ class User_inputs
       else
         puts ""
         puts ""
-        puts "Please enter a valid input from the list below:"
+        puts "Please enter a valid input from the list below:".colorize(:red)
       end
     end
     @inputs_hash["Bathrooms"] = baths
@@ -147,7 +147,7 @@ class User_inputs
       else
         puts ""
         puts ""
-        puts "Please enter a valid input from the list below:"
+        puts "Please enter a valid input from the list below:".colorize(:red)
       end
     end
     @inputs_hash["Property Type"] = p_type

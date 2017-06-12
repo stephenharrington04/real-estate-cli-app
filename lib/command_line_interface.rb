@@ -30,7 +30,7 @@ class CommandLineInterface
       Listing.reset_all
       engine
     elsif string == "3"
-      puts "Thanks for using the Realy Estate Application!"
+      puts "Thanks for using the Real Estate Application!"
     end
   end
 
@@ -80,7 +80,7 @@ class CommandLineInterface
       if valid_types.include?(input)
         mod_input = input
       else
-        puts "Please enter a valid selection from the list below:"
+        puts "Please enter a valid selection from the list below:".colorize(:red)
       end
     end
     case mod_input
@@ -105,10 +105,10 @@ class CommandLineInterface
     if Listing.all == []
       puts ""
       puts ""
-      puts "No results found.  Please enter new search criteria."
+      puts "No results found.  Please enter new search criteria.".colorize(:red)
       puts ""
       puts ""
-      listings_query_results
+      engine
     else
       Listing.all.each do |listing|
         puts "(#{counter})".colorize(:light_blue)
