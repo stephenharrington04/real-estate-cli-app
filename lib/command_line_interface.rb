@@ -124,33 +124,7 @@ class CommandLineInterface
 
   def display_individual_listing(url)
     i_listing_hash = Scraper.listing_scraper(url)
-    i_listing_hash.each do |key, value|
-      puts "#{key}:  #{value}"
-      #case key
-      #  when "address"
-      #    puts "Address:  #{value}"
-      #  when "beds"
-      #    puts "Bedrooms:  #{value}"
-      #  when "baths"
-      #    puts "Bathrooms:  #{value}"
-      #  when "sqft"
-      #    puts "Sqft:  #{value}"
-      #  when "acres"
-      #    puts "Acres:  #{value}"
-      #  when "status"
-      #    puts "Status:  #{value}"
-      #  when "price_per_sqft"
-      #    puts "Price Per Sqft:  #{value}"
-      #  when "days_on_market"
-      #    puts "Days on Markey:  #{value}"
-      #  when "year_built"
-      #    puts "Year Built:  #{value}"
-      #  when "property_type"
-      #    puts "property Type:  #{value}"
-      #  when "description"
-      #    puts "#{value}"
-      #end
-    end
+    i_listing_hash.each {|key, value| puts "#{key}:  #{value}"}
   end
 
   def query_mod
@@ -165,7 +139,6 @@ class CommandLineInterface
       input = gets.strip
       if input == "1" || input == "2" || input == "3"
         query = input
-        binding.pry
       end
     end
     query
