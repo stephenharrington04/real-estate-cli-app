@@ -15,14 +15,6 @@ class CommandLineInterface
     listings_query_results(inquiry)
     display_search_results
     next_step(query_mod)
-    #if query_mod == "1"
-    #  il_url = more_info
-    #  display_individual_listing(il_url)
-    #elsif query_mod == "2"
-    #  run
-    #elsif query_mod == "3"
-    #  puts "Thanks for using the Real Estate Application!"
-    #end
   end
 
   def next_step(string)
@@ -30,6 +22,7 @@ class CommandLineInterface
       display_individual_listing(more_info)
       next_step(query_mod)
     elsif string == "2"
+      Listing.reset_all
       run
     elsif string == "3"
       puts "Thanks for using the Realy Estate Application!"
