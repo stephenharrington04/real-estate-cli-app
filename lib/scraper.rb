@@ -59,6 +59,8 @@ class Scraper
       facts << item.text
     end
     listing_info["Address"] = basic_noko.css(".listing-header").css(".listing-header-main").css(".row").css(".col-sm-7").css(".pull-left").css(".ldp-header-address-wrapper").first.children.css("div").first.attr("content")
+    listing_info["Price"] = basic_noko.css(".listing-header").css(".listing-header-main").css(".row").css(".col-xs-12").css(".row").css(".ldp-header-price-wrap").css(".ldp-header-price").css(".display-inline").css("span").text.scan(/\d|\$|,/).join
+    binding.pry
     listing_info["Beds"] = facts[5]
     listing_info["Baths"] = facts[6]
     listing_info["Sqft"] = facts[7]
