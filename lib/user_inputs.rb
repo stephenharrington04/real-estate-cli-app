@@ -24,7 +24,7 @@ class User_inputs
         puts ""
       end
     end
-    @inputs_hash[:zip_code] = zip
+    @inputs_hash["Zip Code"] = zip
     zip
   end
 
@@ -49,7 +49,7 @@ class User_inputs
         puts "Please enter a valid min-price from the list below:"
       end
     end
-    @inputs_hash[:min_price] = min_p
+    @inputs_hash["Min Price"] = min_p
     min_p
   end
 
@@ -74,7 +74,7 @@ class User_inputs
         puts "Please enter a valid max-price from the list below:"
       end
     end
-    @inputs_hash[:max_price] = max_p
+    @inputs_hash["Max Price"] = max_p
     max_p
   end
 
@@ -99,7 +99,7 @@ class User_inputs
         puts "Please enter a valid input from the list below:"
       end
     end
-    @inputs_hash[:bedrooms] = beds
+    @inputs_hash["Bedrooms"] = beds
     beds
   end
 
@@ -124,7 +124,7 @@ class User_inputs
         puts "Please enter a valid input from the list below:"
       end
     end
-    @inputs_hash[:bathrooms] = baths
+    @inputs_hash["Bathrooms"] = baths
     baths
   end
 
@@ -149,7 +149,7 @@ class User_inputs
         puts "Please enter a valid input from the list below:"
       end
     end
-    @inputs_hash[:property_type] = p_type
+    @inputs_hash["Property Type"] = p_type
     p_type
   end
 
