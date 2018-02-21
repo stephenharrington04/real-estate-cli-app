@@ -22,7 +22,7 @@ class Scraper
     error_message
   end
 
-  def self.search_results_scraper(results_url)
+  def search_results_scraper(results_url)
     listings_info = []
     doc = Nokogiri::HTML(open(results_url))
     doc.css("ul.srp-list-marginless").css("li").each do |listing|
@@ -47,7 +47,7 @@ class Scraper
 
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
 
-  def listing_scraper(listing_url)
+  def self.listing_scraper(listing_url)
     listing_info = {}
     prop_details = []
 
@@ -93,4 +93,4 @@ class Scraper
 end
 
 m = Scraper.new
-m.listing_scraper("https://www.realtor.com/realestateandhomes-detail/1401-Amberleaf-Ct_O-Fallon_IL_62269_M75152-69436")
+m.search_results_scraper("https://www.realtor.com/realestateandhomes-detail/1401-Amberleaf-Ct_O-Fallon_IL_62269_M75152-69436")
