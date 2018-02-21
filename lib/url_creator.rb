@@ -9,7 +9,7 @@ class Url_creator
   end
 
   def url_maker
-    web_address = "http://www.realtor.com/realestateandhomes-search/#{self.search_criteria[:zip]}"
+    web_address = "https://www.realtor.com/realestateandhomes-search/#{self.search_criteria[:zip]}"
     parameters = ["bedrooms", "bathrooms", "prop_type", "price_range"]
     parameters.each do |parameter|
       self.search_criteria.each do |key, value|

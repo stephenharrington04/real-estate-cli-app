@@ -1,3 +1,4 @@
+require_relative '../config/environment'
 
 class Scraper
 
@@ -21,7 +22,7 @@ class Scraper
     error_message
   end
 
-  def self.search_results_scraper(results_url)
+  def search_results_scraper(results_url)
     listings_info = []
     doc = Nokogiri::HTML(open(results_url))
     doc.css("ul.srp-list-marginless").css("li").each do |listing|
@@ -42,6 +43,7 @@ class Scraper
       listings_info << {address: listing_address, price: listing_price, beds: listing_num_beds, baths: listing_num_baths, property_type: listing_prop_type, house_url: listing_url} if listing_address != " , , "
     end
     listings_info
+    binding.pry
   end
 
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
@@ -73,4 +75,9 @@ class Scraper
     listing_info
   end
 
+
+
 end
+
+m = Scraper.new
+m.search_results_scraper("https://www.realtor.com/realestateandhomes-search/62269/beds-3/baths-2/type-single-family-home")
