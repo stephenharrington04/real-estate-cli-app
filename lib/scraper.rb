@@ -22,7 +22,7 @@ class Scraper
     error_message
   end
 
-  def search_results_scraper(results_url)
+  def self.search_results_scraper(results_url)
     listings_info = []
     doc = Nokogiri::HTML(open(results_url))
     doc.css("ul.srp-list-marginless").css("li").each do |listing|
@@ -35,15 +35,14 @@ class Scraper
       listing_address = "#{street_address} #{city_address}, #{state_address}, #{postal_address}"
       listing_price = listing.css(".srp-item-body").css(".srp-item-price").css(".data-price-display").text
       listing_num_beds = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value.meta-beds").text
-      listing_prop_type = listing.css(".srp-item-body").css(".srp-item-details").css(".srp-item-type").css("span").text
+      listing_sqft = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li[data-label='property-meta-sqft']").css("span").text
       listing_num_baths = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li[data-label='property-meta-baths']").css("span").text
       if listing.css(".srp-item-body").css(".srp-item-address a").first != nil
         listing_url << listing.css(".srp-item-body").css(".srp-item-address a").first["href"]
       end
-      listings_info << {address: listing_address, price: listing_price, beds: listing_num_beds, baths: listing_num_baths, property_type: listing_prop_type, house_url: listing_url} if listing_address != " , , "
+      listings_info << {address: listing_address, price: listing_price, beds: listing_num_beds, baths: listing_num_baths, sqft: listing_sqft, house_url: listing_url} if listing_address != " , , "
     end
     listings_info
-    binding.pry
   end
 
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
@@ -79,7 +78,7 @@ class Scraper
 
 end
 
-m = Scraper.new
-m.search_results_scraper("https://www.realtor.com/realestateandhomes-search/62269/beds-3/baths-2/type-single-family-home")
+#m = Scraper.new
+#m.search_results_scraper("https://www.realtor.com/realestateandhomes-search/62269/beds-3/baths-2/type-single-family-home")
   #doc.css("ul.srp-list-marginless").css("li").css(".srp-item-body").css(".srp-item-address").css("a").attr("href").value
 #doc.css("ul.srp-list-marginless").css("li").first.attr("data-url")
