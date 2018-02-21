@@ -26,7 +26,7 @@ class Scraper
     listings_info = []
     doc = Nokogiri::HTML(open(results_url))
     doc.css("ul.srp-list-marginless").css("li").each do |listing|
-      listing_url = "http://www.realtor.com"
+      listing_url = "https://www.realtor.com"
       address_noko = listing.css(".srp-item-body").css(".srp-item-address")
       street_address = address_noko.css(".listing-street-address").text
       city_address = address_noko.css(".listing-city").text
@@ -47,38 +47,42 @@ class Scraper
 
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
 
-  def self.listing_scraper(listing_url)
+  def listing_scraper(listing_url)
     listing_info = {}
     facts = []
+    prop_details = []
     doc = Nokogiri::HTML(open(listing_url))
     basic_noko = doc.css(".page-content").css(".container-ldp").css(".container").css(".row-wrapper-detail").css(".row").css(".col-lg-9")
     detailed_noko = basic_noko.css(".listing-section").css(".listing-subsection")
     detailed_noko.css(".ldp-detail-key-facts").css("ul").css("li").css(".key-fact-data").each do |fact|
       facts << fact.text
     end
+    doc.css(".key-fact-data").each do |detail|
+      prop_details << detail.text
+    end
     basic_noko.css(".listing-header").css(".listing-header-main").css(".row").css(".col-sm-7").css(".pull-left").css(".ldp-header-meta").css("ul").css("li").css("span").each do |item|
       facts << item.text
     end
-    listing_info[:address] = basic_noko.css(".listing-header").css(".listing-header-main").css(".row").css(".col-sm-7").css(".pull-left").css(".ldp-header-address-wrapper").first.children.css("div").first.attr("content")
-    listing_info[:price] = basic_noko.css(".listing-header").css(".listing-header-main").css(".row").css(".col-xs-12").css(".row").css(".ldp-header-price-wrap").css(".ldp-header-price").css(".display-inline").css("span").text.scan(/\d|\$|,/).join
+    listing_info[:address] = doc.css(".ldp-header-address-wrapper").first.children.css("div").first.attr("content")
+    listing_info[:price] = doc.css(".display-inline").css("span")[2].text.scan(/\d|\$|,/).join
     listing_info[:beds] = facts[5]
     listing_info[:baths] = facts[6]
     listing_info[:sqft] = facts[7]
     listing_info[:acres] = facts[8]
-    listing_info[:status] = facts[0]
-    listing_info[:price_per_sqft] = facts[1]
-    listing_info[:days_on_market] = facts[2]
-    listing_info[:year_built] = facts [3]
-    listing_info[:property_type] = facts [4]
+    listing_info[:status] = prop_details[0].strip
+    listing_info[:price_per_sqft] = prop_details[1]
+    listing_info[:days_on_market] = prop_details[2]
+    listing_info[:property_type] = prop_details[3]
+    listing_info[:year_built] = prop_details[4]
+    listing_info[:style] = prop_details[5].strip
     listing_info[:description] = detailed_noko.css(".margin-top-lg").css("p").first.text
     listing_info
+    binding.pry
   end
 
 
 
 end
 
-#m = Scraper.new
-#m.search_results_scraper("https://www.realtor.com/realestateandhomes-search/62269/beds-3/baths-2/type-single-family-home")
-  #doc.css("ul.srp-list-marginless").css("li").css(".srp-item-body").css(".srp-item-address").css("a").attr("href").value
-#doc.css("ul.srp-list-marginless").css("li").first.attr("data-url")
+m = Scraper.new
+m.listing_scraper("https://www.realtor.com/realestateandhomes-detail/1433-Ashfield-Gln_O-Fallon_IL_62269_M82829-38742")
