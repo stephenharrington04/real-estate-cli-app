@@ -1,4 +1,3 @@
-require_relative '../config/environment'
 
 class Scraper
 
@@ -85,7 +84,3 @@ class Scraper
   end
 
 end
-
-#m = Scraper.new
-#m.search_results_scraper("https://www.realtor.com/realestateandhomes-search/62269/beds-3/baths-2/type-single-family-home")
-#m.listing_scraper("https://www.realtor.com/realestateandhomes-detail/508-Haddington-Ln_O-Fallon_IL_62269_M76208-05179")
