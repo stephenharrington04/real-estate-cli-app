@@ -1,6 +1,6 @@
 
 class Listing
-  attr_accessor :address, :price, :beds, :baths, :sqft, :acres, :status, :price_per_sqft,  :days_on_market, :property_type, :year_built, :style, :description, :house_url
+  attr_accessor :address, :price, :beds, :baths, :sqft, :acres, :status, :price_per_sqft, :days_on_market, :property_type, :year_built, :style, :description, :house_url
   @@all =[]
 
   def initialize(listing_hash)

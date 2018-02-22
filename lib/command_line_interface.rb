@@ -69,11 +69,14 @@ class CommandLineInterface
     valid_types = []
     mod_input = ""
     valid_parameter_types = ["Zip Code", "Min Price", "Max Price", "Bedrooms", "Bathrooms", "Property Type"]
+    char_count = valid_parameter_types.join.size
     puts "Which search parameter would you like to modify?"
     until mod_input != ""
+      (char_count + (5 * (valid_parameter_types.size + 1))).times {print "-".colorize(:green)}
       puts ""
       valid_parameter_types.each {|type| print "     #{type}"}
       puts ""
+      (char_count + (5 * (valid_parameter_types.size + 1))).times {print "-".colorize(:green)}
       puts ""
       input = gets.strip.downcase
       valid_parameter_types.each {|type| valid_types << type.downcase}
