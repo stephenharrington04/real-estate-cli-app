@@ -1,3 +1,4 @@
+require_relative '../config/environment'
 
 class Scraper
 
@@ -45,15 +46,45 @@ class Scraper
 
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
 
-  def self.listing_scraper(listing_url)
+  def listing_scraper(listing_url)
     listing_info = {}
     prop_details = []
+    stuff = []
+
+    status = ""
+    price_per_sqft = ""
+    property_type = ""
+    year_built = ""
+    style = ""
+    days_on_market = ""
 
     doc = Nokogiri::HTML(open(listing_url))
 
     doc.css(".key-fact-data").each do |detail|
       prop_details << detail.text
     end
+
+    doc.css(".ldp-detail-key-facts").css("li").css("div").each do |div|
+      stuff << div.text
+    end
+
+    stuff.each_with_index do |data, index|
+      if data.include?("Status")
+        status = stuff[index + 1]
+      elsif data.include?("Price/Sq Ft")
+        price_per_sqft = stuff[index + 1]
+      elsif data.include?("Type")
+        property_type = stuff[index + 1]
+      elsif data.include?("Built")
+        year_built = stuff[index + 1]
+      elsif data.include?("Style")
+        style = stuff[index +1]
+      elsif data.include?("On realtor.com")
+        days_on_market = stuff[index +1]
+      end
+    end
+
+
 
     listing_info[:address] = doc.css(".ldp-header-address-wrapper").first.children.css("div").first.attr("content")
     listing_info[:price] = doc.css(".display-inline span")[2].text.scan(/\d|\$|,/).join
@@ -62,17 +93,18 @@ class Scraper
     listing_info[:baths] ||= doc.css(".ldp-header-meta ul li[data-label='property-meta-bath'] span").text
     listing_info[:sqft] = doc.css(".ldp-header-meta ul li[data-label='property-meta-sqft'] span").text
     listing_info[:acres] = doc.css(".ldp-header-meta ul li[data-label='property-meta-lotsize'] span").text
-    listing_info[:status] = prop_details[0].strip
+    #listing_info[:status] = prop_details[0].strip
     listing_info[:price_per_sqft] = prop_details[1]
     listing_info[:days_on_market] = prop_details[2]
     listing_info[:property_type] = prop_details[3]
     listing_info[:year_built] = prop_details[4]
-    listing_info[:style] = prop_details[5].strip
+    #listing_info[:style] = prop_details[5].strip
     listing_info[:description] = doc.css(".margin-top-lg p").first.text
     listing_info
+    binding.pry
   end
 
-  def self.baths(bath_array)
+  def baths(bath_array)
     case bath_array.size
     when 0 || nil
       nil
@@ -84,3 +116,5 @@ class Scraper
   end
 
 end
+
+m = Scraper.new.listing_scraper("https://www.realtor.com/realestateandhomes-detail/99-Polsin-Dr_Schenectady_NY_12303_M48994-18315")
