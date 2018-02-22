@@ -1,4 +1,3 @@
-require_relative '../config/environment'
 
 class Scraper
 
@@ -46,16 +45,13 @@ class Scraper
 
 ################## INDIVIDUAL HOUSE SCRAPER FUNCTIONS ############################################
 
-  def listing_scraper(listing_url)
+  def self.listing_scraper(listing_url)
     listing_info = {}
     prop_details = []
 
     doc = Nokogiri::HTML(open(listing_url))
 
-    doc.css(".ldp-detail-key-facts").css("li").css("div").each do |div|
-      prop_details << div.text
-    end
-
+    doc.css(".ldp-detail-key-facts li div").each {|div| prop_details << div.text}
     prop_details.each_with_index do |data, index|
       if data.include?("Status")
         listing_info[:status] = prop_details[index + 1].strip
@@ -81,10 +77,9 @@ class Scraper
     listing_info[:acres] = doc.css(".ldp-header-meta ul li[data-label='property-meta-lotsize'] span").text
     listing_info[:description] = doc.css(".margin-top-lg p").first.text
     listing_info
-    binding.pry
   end
 
-  def baths(bath_array)
+  def self.baths(bath_array)
     case bath_array.size
     when 0 || nil
       nil
@@ -96,5 +91,3 @@ class Scraper
   end
 
 end
-
-m = Scraper.new.listing_scraper("https://www.realtor.com/realestateandhomes-detail/508-Haddington-Ln_O-Fallon_IL_62269_M76208-05179")
