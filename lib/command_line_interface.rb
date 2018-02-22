@@ -116,7 +116,7 @@ class CommandLineInterface
         puts "   Price:".colorize(:light_blue) + "  #{listing.price ||= "Information not provided"}"
         puts "   # Of Bedrooms:".colorize(:light_blue) + "  #{listing.beds ||= "Information not provided"}"
         puts "   # Of Bathrooms:".colorize(:light_blue) + "  #{listing.baths ||= "Information not provided"}"
-        puts "   Property Type:".colorize(:light_blue) + "  #{listing.property_type ||= "Information not provided"}"
+        puts "   Sqft:".colorize(:light_blue) + "  #{listing.sqft ||= "Information not provided"}"
         puts "   Listing URL:".colorize(:light_blue) + "  #{listing.house_url ||= "Information not provided"}"
         counter += 1
       end

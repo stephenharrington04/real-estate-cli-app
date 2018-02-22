@@ -22,23 +22,22 @@ class Scraper
     error_message
   end
 
-  def search_results_scraper(results_url)
+  def self.search_results_scraper(results_url)
     listings_info = []
     doc = Nokogiri::HTML(open(results_url))
     doc.css("ul.srp-list-marginless").css("li").each do |listing|
       listing_url = "https://www.realtor.com"
-      address_noko = listing.css(".srp-item-body").css(".srp-item-address")
-      street_address = address_noko.css(".listing-street-address").text
-      city_address = address_noko.css(".listing-city").text
-      state_address = address_noko.css(".listing-region").text
-      postal_address = address_noko.css(".listing-postal").text
+      street_address = listing.css(".listing-street-address").text
+      city_address = listing.css(".listing-city").text
+      state_address = listing.css(".listing-region").text
+      postal_address = listing.css(".listing-postal").text
       listing_address = "#{street_address} #{city_address}, #{state_address}, #{postal_address}"
-      listing_price = listing.css(".srp-item-body").css(".srp-item-price").css(".data-price-display").text
-      listing_num_beds = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li").css("span.data-value.meta-beds").text
-      listing_sqft = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li[data-label='property-meta-sqft']").css("span").text
-      listing_num_baths = listing.css(".srp-item-body").css(".srp-item-property-meta").css("ul").css("li[data-label='property-meta-baths']").css("span").text
-      if listing.css(".srp-item-body").css(".srp-item-address a").first != nil
-        listing_url << listing.css(".srp-item-body").css(".srp-item-address a").first["href"]
+      listing_price = listing.css(".data-price-display").text
+      listing_num_beds = listing.css("span.data-value.meta-beds").text
+      listing_sqft = listing.css("li[data-label='property-meta-sqft']").css("span").text
+      listing_num_baths = listing.css("li[data-label='property-meta-baths']").css("span").text
+      if listing.css(".srp-item-address a").first != nil
+        listing_url << listing.css(".srp-item-address a").first["href"]
       end
       listings_info << {address: listing_address, price: listing_price, beds: listing_num_beds, baths: listing_num_baths, sqft: listing_sqft, house_url: listing_url} if listing_address != " , , "
     end
@@ -72,25 +71,20 @@ class Scraper
     listing_info[:style] = prop_details[5].strip
     listing_info[:description] = doc.css(".margin-top-lg").css("p").first.text
     listing_info
-    binding.pry
   end
 
-  def baths(bath_array)
+  def self.baths(bath_array)
     case bath_array.size
     when 0 || nil
       nil
     when 1
       bath_array.push(" Full").join
     when 2
-      bath_array.insert(1, " Full, ")
-      bath_array << " Half"
-      bath_array.join
+      bath_array.insert(1, " Full, ").push(" Half").join
     end
   end
 
-
-
 end
 
-m = Scraper.new
-m.search_results_scraper("https://www.realtor.com/realestateandhomes-detail/1401-Amberleaf-Ct_O-Fallon_IL_62269_M75152-69436")
+#m = Scraper.new
+#m.search_results_scraper("https://www.realtor.com/realestateandhomes-search/62269/beds-3/baths-2/type-single-family-home")
