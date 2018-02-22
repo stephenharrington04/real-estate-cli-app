@@ -25,7 +25,7 @@ class Scraper
   def self.search_results_scraper(results_url)
     listings_info = []
     doc = Nokogiri::HTML(open(results_url))
-    doc.css("ul.srp-list-marginless").css("li").each do |listing|
+    doc.css("ul.srp-list-marginless li").each do |listing|
       listing_url = "https://www.realtor.com"
       street_address = listing.css(".listing-street-address").text
       city_address = listing.css(".listing-city").text
@@ -34,8 +34,8 @@ class Scraper
       listing_address = "#{street_address} #{city_address}, #{state_address}, #{postal_address}"
       listing_price = listing.css(".data-price-display").text
       listing_num_beds = listing.css("span.data-value.meta-beds").text
-      listing_sqft = listing.css("li[data-label='property-meta-sqft']").css("span").text
-      listing_num_baths = listing.css("li[data-label='property-meta-baths']").css("span").text
+      listing_sqft = listing.css("li[data-label='property-meta-sqft'] span").text
+      listing_num_baths = listing.css("li[data-label='property-meta-baths'] span").text
       if listing.css(".srp-item-address a").first != nil
         listing_url << listing.css(".srp-item-address a").first["href"]
       end
@@ -57,19 +57,19 @@ class Scraper
     end
 
     listing_info[:address] = doc.css(".ldp-header-address-wrapper").first.children.css("div").first.attr("content")
-    listing_info[:price] = doc.css(".display-inline").css("span")[2].text.scan(/\d|\$|,/).join
-    listing_info[:beds] = doc.css(".ldp-header-meta").css("ul").css("li[data-label='property-meta-beds']").css("span").text
-    listing_info[:baths] = baths(doc.css(".ldp-header-meta").css("ul").css("li[data-label='property-meta-baths']").css("span").collect {|span| span.text})
-    listing_info[:baths] ||= doc.css(".ldp-header-meta").css("ul").css("li[data-label='property-meta-bath']").css("span").text
-    listing_info[:sqft] = doc.css(".ldp-header-meta").css("ul").css("li[data-label='property-meta-sqft']").css("span").text
-    listing_info[:acres] = doc.css(".ldp-header-meta").css("ul").css("li[data-label='property-meta-lotsize']").css("span").text
+    listing_info[:price] = doc.css(".display-inline span")[2].text.scan(/\d|\$|,/).join
+    listing_info[:beds] = doc.css(".ldp-header-meta ul li[data-label='property-meta-beds'] span").text
+    listing_info[:baths] = baths(doc.css(".ldp-header-meta ul li[data-label='property-meta-baths'] span").collect {|span| span.text})
+    listing_info[:baths] ||= doc.css(".ldp-header-meta ul li[data-label='property-meta-bath'] span").text
+    listing_info[:sqft] = doc.css(".ldp-header-meta ul li[data-label='property-meta-sqft'] span").text
+    listing_info[:acres] = doc.css(".ldp-header-meta ul li[data-label='property-meta-lotsize'] span").text
     listing_info[:status] = prop_details[0].strip
     listing_info[:price_per_sqft] = prop_details[1]
     listing_info[:days_on_market] = prop_details[2]
     listing_info[:property_type] = prop_details[3]
     listing_info[:year_built] = prop_details[4]
     listing_info[:style] = prop_details[5].strip
-    listing_info[:description] = doc.css(".margin-top-lg").css("p").first.text
+    listing_info[:description] = doc.css(".margin-top-lg p").first.text
     listing_info
   end
 
@@ -88,3 +88,4 @@ end
 
 #m = Scraper.new
 #m.search_results_scraper("https://www.realtor.com/realestateandhomes-search/62269/beds-3/baths-2/type-single-family-home")
+#m.listing_scraper("https://www.realtor.com/realestateandhomes-detail/508-Haddington-Ln_O-Fallon_IL_62269_M76208-05179")
