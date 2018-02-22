@@ -51,8 +51,21 @@ class Scraper
 
     doc = Nokogiri::HTML(open(listing_url))
 
-    doc.css(".key-fact-data").each do |detail|
-      prop_details << detail.text
+    doc.css(".ldp-detail-key-facts li div").each {|div| prop_details << div.text}
+    prop_details.each_with_index do |data, index|
+      if data.include?("Status")
+        listing_info[:status] = prop_details[index + 1].strip
+      elsif data.include?("Price/Sq Ft")
+        listing_info[:price_per_sqft] = prop_details[index + 1]
+      elsif data.include?("Type")
+        listing_info[:property_type] = prop_details[index + 1]
+      elsif data.include?("Built")
+        listing_info[:year_built] = prop_details[index + 1]
+      elsif data.include?("Style")
+        listing_info[:style] = prop_details[index +1].strip
+      elsif data.include?("On realtor.com")
+        listing_info[:days_on_market] = prop_details[index +1]
+      end
     end
 
     listing_info[:address] = doc.css(".ldp-header-address-wrapper").first.children.css("div").first.attr("content")
@@ -62,12 +75,6 @@ class Scraper
     listing_info[:baths] ||= doc.css(".ldp-header-meta ul li[data-label='property-meta-bath'] span").text
     listing_info[:sqft] = doc.css(".ldp-header-meta ul li[data-label='property-meta-sqft'] span").text
     listing_info[:acres] = doc.css(".ldp-header-meta ul li[data-label='property-meta-lotsize'] span").text
-    listing_info[:status] = prop_details[0].strip
-    listing_info[:price_per_sqft] = prop_details[1]
-    listing_info[:days_on_market] = prop_details[2]
-    listing_info[:property_type] = prop_details[3]
-    listing_info[:year_built] = prop_details[4]
-    listing_info[:style] = prop_details[5].strip
     listing_info[:description] = doc.css(".margin-top-lg p").first.text
     listing_info
   end
