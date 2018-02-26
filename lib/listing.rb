@@ -49,20 +49,20 @@ class Listing
     end
   end
 
-  def self.display_individual_listing
-    puts "Address:".colorize(:light_blue) + "  #{self.address ||= "Information not provided"}"
-    puts "Price:".colorize(:light_blue) + "  #{self.price ||= "Information not provided"}"
-    puts "Status:".colorize(:light_blue) + "  #{self.status ||= "Information not provided"}"
-    puts "Year Built:".colorize(:light_blue) + "  #{self.year_built ||= "Information not provided"}"
-    puts "Days on Market:".colorize(:light_blue) + "  #{self.days_on_market ||= "Information not provided"}"
-    puts "# Of Bedrooms:".colorize(:light_blue) + "  #{self.beds ||= "Information not provided"}"
-    puts "# of Bathrooms:".colorize(:light_blue) + "  #{self.baths ||= "Information not provided"}"
-    puts "Square Feet (livable):".colorize(:light_blue) + "  #{self.sqft ||= "Information not provided"}"
-    puts "Acres / Sqft (property):".colorize(:light_blue) + "  #{self.acres ||= "Information not provided"}"
-    puts "Price per SqFt:".colorize(:light_blue) + "  #{self.price_per_sqft ||= "Information not provided"}"
-    puts "Property Type:".colorize(:light_blue) + "  #{self.property_type ||= "Information not provided"}"
-    puts "Listing URL:".colorize(:light_blue) + "  #{self.house_url ||= "Information not provided"}"
-    puts "Description:".colorize(:light_blue) + "  #{self.description ||= "Information not provided"}"
+  def self.display_individual_listing(listing)
+    puts "Address:".colorize(:light_blue) + "  #{listing.address ||= "Information not provided"}"
+    puts "Price:".colorize(:light_blue) + "  #{listing.price ||= "Information not provided"}"
+    puts "Status:".colorize(:light_blue) + "  #{listing.status ||= "Information not provided"}"
+    puts "Year Built:".colorize(:light_blue) + "  #{listing.year_built ||= "Information not provided"}"
+    puts "Days on Market:".colorize(:light_blue) + "  #{listing.days_on_market ||= "Information not provided"}"
+    puts "# Of Bedrooms:".colorize(:light_blue) + "  #{listing.beds ||= "Information not provided"}"
+    puts "# of Bathrooms:".colorize(:light_blue) + "  #{listing.baths ||= "Information not provided"}"
+    puts "Square Feet (livable):".colorize(:light_blue) + "  #{listing.sqft ||= "Information not provided"}"
+    puts "Acres / Sqft (property):".colorize(:light_blue) + "  #{listing.acres ||= "Information not provided"}"
+    puts "Price per SqFt:".colorize(:light_blue) + "  #{listing.price_per_sqft ||= "Information not provided"}"
+    puts "Property Type:".colorize(:light_blue) + "  #{listing.property_type ||= "Information not provided"}"
+    puts "Listing URL:".colorize(:light_blue) + "  #{listing.house_url ||= "Information not provided"}"
+    puts "Description:".colorize(:light_blue) + "  #{listing.description ||= "Information not provided"}"
   end
 
 end

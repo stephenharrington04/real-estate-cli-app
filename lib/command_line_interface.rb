@@ -11,13 +11,17 @@ class CommandLineInterface
 
   def engine
     new_search = create_search_parameters
-    #parsed_info = Parser.parse_parameters(new_search)
-    create_listing(new_search)
-    binding.pry
+    create_listings(new_search)
     Listing.display_search_results
-    #display_search_results
-    #next_step(query_mod)
-
+    case query_mod
+    when "1"
+      individual_listing
+      query_mod
+    when "2"
+      start_over
+    when "3"
+      puts "Thanks for using the Real Estate Application!"
+    end
   end
 
 #############Creating Search Parameters##########################################
@@ -230,30 +234,27 @@ class CommandLineInterface
 ########################################################################
 
 
-  def next_step(query_mod_return)
-    if query_mod_return == "1"
-      i_listing = more_info
-      i_listing_hash = Scraper.listing_scraper(i_listing.house_url)
-      expanded_listing = i_listing.add_listing_attributes(i_listing_hash)
-      display_individual_listing(expanded_listing)
-      next_step(query_mod)
-    elsif query_mod_return == "2"
-      Listing.reset_all
-      engine
-    elsif query_mod_return == "3"
-      puts "Thanks for using the Real Estate Application!"
-    end
+  def individual_listing
+    individual_listing = more_info
+    individual_listing_hash = Scraper.listing_scraper(individual_listing.house_url)
+    expanded_listing = individual_listing.add_listing_attributes(individual_listing_hash)
+    Listing.display_individual_listing(expanded_listing)
   end
 
-  def create_listing(search_parameters)
-    parsed_search_parameters = Parser.parse_parameters(search_parameters)
-    website = Url_creator.new(parsed_search_parameters)
+  def create_listings(search_parameters)
+    formatted_search_parameters = Formatter.format_parameters(search_parameters)
+    website = Url_creator.new(formatted_search_parameters)
     if Scraper.checker(website.url) != "404 Error"
       listings_array = Scraper.search_results_scraper(website.url)
       Listing.create_from_collection(listings_array)
     else
-      create_listing(search_parameters)
+      create_listings(search_parameters)
     end
+  end
+
+  def start_over
+    Listing.reset_all
+    engine
   end
 
   def query_mod

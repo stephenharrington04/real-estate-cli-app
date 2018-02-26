@@ -1,16 +1,16 @@
-class Parser
+class Formatter
 
-  def self.parse_parameters(search_parameters)
-    parsed_parameters = {
-      parsed_zip_code: search_parameters.zip_code,
-      parsed_bedrooms: bedrooms_parse(search_parameters),
-      parsed_bathrooms: bathrooms_parse(search_parameters),
-      parsed_property_type: property_type_parse(search_parameters),
-      parsed_price_range: price_parse(search_parameters)
+  def self.format_parameters(search_parameters)
+    formatted_parameters = {
+      formatted_zip_code: search_parameters.zip_code,
+      formatted_bedrooms: format_bedrooms(search_parameters),
+      formatted_bathrooms: format_bathrooms(search_parameters),
+      formatted_property_type: format_property_type(search_parameters),
+      formatted_price_range: format_price(search_parameters)
     }
   end
 
-  def self.price_parse(search_parameters)
+  def self.format_price(search_parameters)
     min_p = search_parameters.min_price
     max_p = search_parameters.max_price
     price = ""
@@ -26,7 +26,7 @@ class Parser
     price
   end
 
-  def self.bedrooms_parse(search_parameters)
+  def self.format_bedrooms(search_parameters)
     beds = ""
     case search_parameters.bedrooms
       when "any"
@@ -47,7 +47,7 @@ class Parser
     beds
   end
 
-  def self.bathrooms_parse(search_parameters)
+  def self.format_bathrooms(search_parameters)
     baths = ""
     case search_parameters.bathrooms
       when "any"
@@ -66,7 +66,7 @@ class Parser
     baths
   end
 
-  def self.property_type_parse(search_parameters)
+  def self.format_property_type(search_parameters)
     type = ""
     case search_parameters.property_type
       when "any"
