@@ -25,7 +25,49 @@ class CommandLineInterface
     end
   end
 
-#############Creating Search Parameters##########################################
+  def start_over
+    Listing.reset_all
+    engine
+  end
+
+  def no_results?
+    start_over if Listing.all == []
+  end
+
+  def query_mod
+    query = ""
+    puts ""
+    puts "Would you like to:"
+    puts "(1) Get more information about a listing"
+    puts "(2) Start a new search"
+    puts "(3) Exit"
+    until query != ""
+      puts "Select '1' '2' or '3'"
+      input = gets.strip
+      if input == "1" || input == "2" || input == "3"
+        query = input
+      end
+    end
+    query
+  end
+
+  def more_info
+    more = ""
+    available_numbers = Listing.all.size
+    puts "You only have one available listing" if available_numbers == 1
+    puts ""
+    puts "For which listing do you want more information?"
+    until more != ""
+      puts "Please select 1 - #{available_numbers.to_s}"
+      which_listing = gets.strip
+      if which_listing.to_i > 0 && which_listing.to_i <= available_numbers
+        more = which_listing
+      end
+    end
+    Listing.all[(more.to_i) - 1]
+  end
+
+####################################Creating Search Parameters####################################
 
   def create_search_parameters
     new_search = Search_parameters.new(set_zip_code, set_min_price, set_max_price, set_bedrooms, set_bathrooms, set_property_type)
@@ -232,67 +274,22 @@ class CommandLineInterface
     end
   end
 
-########################################################################
+  ####################################Creating Listings####################################
 
+  def create_listings(search_parameters)
+    website = Url_creator.url_maker(Formatter.format_parameters(search_parameters))
+    if Scraper.checker(website) != "404 Error"
+      Listing.create_from_collection(Scraper.search_results_scraper(website))
+    else
+      create_listings(search_parameters)
+    end
+  end
 
   def individual_listing
     individual_listing = more_info
     individual_listing_hash = Scraper.listing_scraper(individual_listing.house_url)
     expanded_listing = individual_listing.add_listing_attributes(individual_listing_hash)
     Listing.display_individual_listing(expanded_listing)
-  end
-
-  def create_listings(search_parameters)
-    formatted_search_parameters = Formatter.format_parameters(search_parameters)
-    website = Url_creator.url_maker(formatted_search_parameters)
-    if Scraper.checker(website) != "404 Error"
-      listings_array = Scraper.search_results_scraper(website)
-      Listing.create_from_collection(listings_array)
-    else
-      create_listings(search_parameters)
-    end
-  end
-
-  def start_over
-    Listing.reset_all
-    engine
-  end
-
-  def no_results?
-    start_over if Listing.all == []
-  end
-
-  def query_mod
-    query = ""
-    puts ""
-    puts "Would you like to:"
-    puts "(1) Get more information about a listing"
-    puts "(2) Start a new search"
-    puts "(3) Exit"
-    until query != ""
-      puts "Select '1' '2' or '3'"
-      input = gets.strip
-      if input == "1" || input == "2" || input == "3"
-        query = input
-      end
-    end
-    query
-  end
-
-  def more_info
-    more = ""
-    available_numbers = Listing.all.size
-    puts "You only have one available listing" if available_numbers == 1
-    puts ""
-    puts "For which listing do you want more information?"
-    until more != ""
-      puts "Please select 1 - #{available_numbers.to_s}"
-      which_listing = gets.strip
-      if which_listing.to_i > 0 && which_listing.to_i <= available_numbers
-        more = which_listing
-      end
-    end
-    Listing.all[(more.to_i) - 1]
   end
 
 end
