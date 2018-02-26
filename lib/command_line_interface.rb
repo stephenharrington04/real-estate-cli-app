@@ -215,29 +215,29 @@ class CommandLineInterface
 ########################################################################
 
 
-  def next_step(string)
-    if string == "1"
+  def next_step(query_mod_return)
+    if query_mod_return == "1"
       i_listing = more_info
       i_listing_hash = Scraper.listing_scraper(i_listing.house_url)
       expanded_listing = i_listing.add_listing_attributes(i_listing_hash)
       display_individual_listing(expanded_listing)
       next_step(query_mod)
-    elsif string == "2"
+    elsif query_mod_return == "2"
       Listing.reset_all
       engine
-    elsif string == "3"
+    elsif query_mod_return == "3"
       puts "Thanks for using the Real Estate Application!"
     end
   end
 
   def create_listing(search_parameters)
-    parsed_criteria = Parser.new(search_parameters)
-    url = Url_creator.new(parsed_criteria)
-    if Scraper.checker(criteria_url.url) != "404 Error"
-      listings_array = Scraper.search_results_scraper(criteria_url.url)
+    parsed_search_parameters = Parser.parse_parameters(search_parameters)
+    website = Url_creator.new(parsed_search_parameters)
+    if Scraper.checker(website.url) != "404 Error"
+      listings_array = Scraper.search_results_scraper(website.url)
       Listing.create_from_collection(listings_array)
     else
-      create_listing(create_search_parameters)
+      create_listing(search_parameters)
     end
   end
 
