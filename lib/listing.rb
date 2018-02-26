@@ -34,9 +34,9 @@ class Listing
       puts ""
       puts "No results found.  Please enter new search criteria.".colorize(:red)
       puts ""
-      puts ""
     else
       all.each do |listing|
+        puts ""
         puts "(#{counter})".colorize(:light_blue)
         puts "   Address:".colorize(:light_blue) + "  #{listing.address ||= "Information not provided"}"
         puts "   Price:".colorize(:light_blue) + "  #{listing.price ||= "Information not provided"}"
