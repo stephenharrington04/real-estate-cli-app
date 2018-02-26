@@ -6,8 +6,7 @@ class CommandLineInterface
   end
 
   def engine
-    new_search = create_search_parameters
-    create_listings(new_search)
+    create_listings(create_search_parameters)
     Listing.display_search_results
     no_results?
     case query_mod
@@ -45,22 +44,6 @@ class CommandLineInterface
       end
     end
     query
-  end
-
-  def more_info
-    more = ""
-    available_numbers = Listing.all.size
-    puts "You only have one available listing" if available_numbers == 1
-    puts ""
-    puts "For which listing do you want more information?"
-    until more != ""
-      puts "Please select 1 - #{available_numbers.to_s}"
-      which_listing = gets.strip
-      if which_listing.to_i > 0 && which_listing.to_i <= available_numbers
-        more = which_listing
-      end
-    end
-    Listing.all[(more.to_i) - 1]
   end
 
 ####################################Creating Search Parameters####################################
@@ -282,10 +265,26 @@ class CommandLineInterface
   end
 
   def individual_listing
-    individual_listing = more_info
+    individual_listing = select_listing
     individual_listing_hash = Scraper.listing_scraper(individual_listing.house_url)
     expanded_listing = individual_listing.add_listing_attributes(individual_listing_hash)
     Listing.display_individual_listing(expanded_listing)
+  end
+
+  def select_listing
+    listing_index = ""
+    available_numbers = Listing.all.size
+    puts "You only have one available listing" if available_numbers == 1
+    puts ""
+    puts "For which listing do you want more information?"
+    until listing_index != ""
+      puts "Please select 1 - #{available_numbers.to_s}"
+      which_listing = gets.strip
+      if which_listing.to_i > 0 && which_listing.to_i <= available_numbers
+        listing_index = which_listing
+      end
+    end
+    Listing.all[(listing_index.to_i) - 1]
   end
 
 end
