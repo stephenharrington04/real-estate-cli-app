@@ -1,4 +1,3 @@
-require 'pry'
 class CommandLineInterface
 
   def run
