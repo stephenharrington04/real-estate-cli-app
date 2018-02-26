@@ -27,7 +27,7 @@ class Listing
     @@all = []
   end
 
-  def display_search_results
+  def self.display_search_results
     counter = 1
     if self.all == []
       puts ""
@@ -50,7 +50,7 @@ class Listing
     end
   end
 
-  def display_individual_listing
+  def self.display_individual_listing
     puts "Address:".colorize(:light_blue) + "  #{self.address ||= "Information not provided"}"
     puts "Price:".colorize(:light_blue) + "  #{self.price ||= "Information not provided"}"
     puts "Status:".colorize(:light_blue) + "  #{self.status ||= "Information not provided"}"

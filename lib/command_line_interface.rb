@@ -12,9 +12,11 @@ class CommandLineInterface
   def engine
     new_search = create_search_parameters
     #parsed_info = Parser.parse_parameters(new_search)
-    #create_listing(new_search)
+    create_listing(new_search)
+    Listing.display_search_results
     #display_search_results
     #next_step(query_mod)
+
   end
 
 #############Creating Search Parameters##########################################
@@ -210,17 +212,17 @@ class CommandLineInterface
   def modify_parameter_value(parameter_type)
     case parameter_type
     when "zip code"
-      return set_zip_code
+      set_zip_code
     when "min price"
-      return set_min_price
+      set_min_price
     when "max price"
-      return set_max_price
+      set_max_price
     when "bedrooms"
-      return set_bedrooms
+      set_bedrooms
     when "bathrooms"
-      return set_bathrooms
+      set_bathrooms
     when "property type"
-      return set_property_type
+      set_property_type
     end
   end
 
