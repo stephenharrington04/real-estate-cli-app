@@ -35,6 +35,10 @@ class Listing
       puts "No results found.  Please enter new search criteria.".colorize(:red)
       puts ""
     else
+      puts ""
+      puts "    -----------------------------".colorize(:green)
+      puts "    | DISPLAYING SEARCH RESULTS |".colorize(:green)
+      puts "    -----------------------------".colorize(:green)
       all.each do |listing|
         puts ""
         puts "(#{counter})".colorize(:light_blue)
