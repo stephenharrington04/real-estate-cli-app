@@ -13,6 +13,7 @@ class CommandLineInterface
     new_search = create_search_parameters
     create_listings(new_search)
     Listing.display_search_results
+    no_results?
     case query_mod
     when "1"
       individual_listing
@@ -243,9 +244,9 @@ class CommandLineInterface
 
   def create_listings(search_parameters)
     formatted_search_parameters = Formatter.format_parameters(search_parameters)
-    website = Url_creator.new(formatted_search_parameters)
-    if Scraper.checker(website.url) != "404 Error"
-      listings_array = Scraper.search_results_scraper(website.url)
+    website = Url_creator.url_maker(formatted_search_parameters)
+    if Scraper.checker(website) != "404 Error"
+      listings_array = Scraper.search_results_scraper(website)
       Listing.create_from_collection(listings_array)
     else
       create_listings(search_parameters)
@@ -255,6 +256,10 @@ class CommandLineInterface
   def start_over
     Listing.reset_all
     engine
+  end
+
+  def no_results?
+    start_over if Listing.all == []
   end
 
   def query_mod
