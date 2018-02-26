@@ -2,7 +2,7 @@ class Parser
 
   def self.parse_parameters(search_parameters)
     parsed_parameters = {
-      parsed_zip_code: search_parameters.zipcode,
+      parsed_zip_code: search_parameters.zip_code,
       parsed_bedrooms: bedrooms_parse(search_parameters),
       parsed_bathrooms: bathrooms_parse(search_parameters),
       parsed_property_type: property_type_parse(search_parameters),

@@ -10,9 +10,10 @@ class CommandLineInterface
   end
 
   def engine
-    create_listing(create_search_parameters)
-    display_search_results
-    next_step(query_mod)
+    new_search = create_search_parameters
+    create_listing(new_search)
+    #display_search_results
+    #next_step(query_mod)
   end
 
 #############Creating Search Parameters##########################################
