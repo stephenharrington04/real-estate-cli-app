@@ -24,7 +24,9 @@ class CommandLineInterface
     elsif selection == "2"
       start_over
     else
+      puts ""
       puts "Thanks for using the Real Estate Application!"
+      puts ""
     end
   end
 
