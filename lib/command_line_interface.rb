@@ -22,7 +22,7 @@ class CommandLineInterface
   end
 
   def what_next?
-    selection = query_mod
+    selection = options_after_listings_results
     if selection == "1"
       individual_listing
       what_next?
@@ -33,21 +33,21 @@ class CommandLineInterface
     end
   end
 
-  def query_mod
-    query = ""
+  def options_after_listings_results
+    option = ""
     puts ""
     puts "Would you like to:"
     puts "(1) Get more information about a listing"
     puts "(2) Start a new search"
     puts "(3) Exit"
-    until query != ""
+    until option != ""
       puts "Select '1' '2' or '3'"
       input = gets.strip
       if input == "1" || input == "2" || input == "3"
-        query = input
+        option = input
       end
     end
-    query
+    option
   end
 
 ####################################Creating Search Parameters####################################
