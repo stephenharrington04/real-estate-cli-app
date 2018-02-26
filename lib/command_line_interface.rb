@@ -9,15 +9,7 @@ class CommandLineInterface
     create_listings(create_search_parameters)
     Listing.display_search_results
     no_results?
-    case query_mod
-    when "1"
-      individual_listing
-      query_mod
-    when "2"
-      start_over
-    when "3"
-      puts "Thanks for using the Real Estate Application!"
-    end
+    what_next?
   end
 
   def start_over
@@ -27,6 +19,18 @@ class CommandLineInterface
 
   def no_results?
     start_over if Listing.all == []
+  end
+
+  def what_next?
+    selection = query_mod
+    if selection == "1"
+      individual_listing
+      what_next?
+    elsif selection == "2"
+      start_over
+    else
+      puts "Thanks for using the Real Estate Application!"
+    end
   end
 
   def query_mod
