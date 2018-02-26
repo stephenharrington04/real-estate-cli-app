@@ -1,12 +1,8 @@
 require 'pry'
 class CommandLineInterface
   def run
-    welcome_message
-    engine
-  end
-
-  def welcome_message
     puts "Welcome to the Real Estate Application!"
+    engine
   end
 
   def engine
