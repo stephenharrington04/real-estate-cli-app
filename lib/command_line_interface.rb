@@ -1,11 +1,7 @@
 require 'pry'
 class CommandLineInterface
-  def run
-    puts "Welcome to the Real Estate Application!"
-    engine
-  end
 
-  def engine
+  def run
     create_listings(create_search_parameters)
     Listing.display_search_results
     no_results?
@@ -14,7 +10,7 @@ class CommandLineInterface
 
   def start_over
     Listing.reset_all
-    engine
+    run
   end
 
   def no_results?
