@@ -4,7 +4,7 @@ class Listing
   @@all =[]
 
   def initialize(listing_hash)
-    listing_hash.each {|key, value| self.send("#{key}=", value)}
+    listing_hash.each {|key, value| self.send("#{key}=", value) if value != ""}
     @@all << self
   end
 
@@ -29,22 +29,21 @@ class Listing
 
   def self.display_search_results
     counter = 1
-    if self.all == []
+    if all == []
       puts ""
       puts ""
       puts "No results found.  Please enter new search criteria.".colorize(:red)
       puts ""
       puts ""
-      engine
     else
-      self.all.each do |listing|
+      all.each do |listing|
         puts "(#{counter})".colorize(:light_blue)
-        puts "   Address:".colorize(:light_blue) + "  #{self.address ||= "Information not provided"}"
-        puts "   Price:".colorize(:light_blue) + "  #{self.price ||= "Information not provided"}"
-        puts "   # Of Bedrooms:".colorize(:light_blue) + "  #{self.beds ||= "Information not provided"}"
-        puts "   # Of Bathrooms:".colorize(:light_blue) + "  #{self.baths ||= "Information not provided"}"
-        puts "   Sqft:".colorize(:light_blue) + "  #{self.sqft ||= "Information not provided"}"
-        puts "   Listing URL:".colorize(:light_blue) + "  #{self.house_url ||= "Information not provided"}"
+        puts "   Address:".colorize(:light_blue) + "  #{listing.address ||= "Information not provided"}"
+        puts "   Price:".colorize(:light_blue) + "  #{listing.price ||= "Information not provided"}"
+        puts "   # Of Bedrooms:".colorize(:light_blue) + "  #{listing.beds ||= "Information not provided"}"
+        puts "   # Of Bathrooms:".colorize(:light_blue) + "  #{listing.baths ||= "Information not provided"}"
+        puts "   Sqft:".colorize(:light_blue) + "  #{listing.sqft ||= "Information not provided"}"
+        puts "   Listing URL:".colorize(:light_blue) + "  #{listing.house_url ||= "Information not provide"}"
         counter += 1
       end
     end

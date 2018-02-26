@@ -13,6 +13,7 @@ class CommandLineInterface
     new_search = create_search_parameters
     #parsed_info = Parser.parse_parameters(new_search)
     create_listing(new_search)
+    binding.pry
     Listing.display_search_results
     #display_search_results
     #next_step(query_mod)
