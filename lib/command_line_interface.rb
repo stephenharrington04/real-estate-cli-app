@@ -1,4 +1,4 @@
-
+require 'pry'
 class CommandLineInterface
   def run
     welcome_message
@@ -11,7 +11,8 @@ class CommandLineInterface
 
   def engine
     new_search = create_search_parameters
-    create_listing(new_search)
+    #parsed_info = Parser.parse_parameters(new_search)
+    #create_listing(new_search)
     #display_search_results
     #next_step(query_mod)
   end
@@ -19,18 +20,21 @@ class CommandLineInterface
 #############Creating Search Parameters##########################################
 
   def create_search_parameters
-    new_search = Search_parameters.new(zip_code, min_price, max_price, bedrooms, bathrooms, property_type).display_search_parameters
+    new_search = Search_parameters.new(set_zip_code, set_min_price, set_max_price, set_bedrooms, set_bathrooms, set_property_type)
+    new_search.display_search_parameters
     while modify_parameter? == "y"
       type = modify_which_parameter_type?
-      new_search.mod_search_parameter(type, modify_parameter_value(type))
-      modify_parameter?
+      mod = modify_parameter_value(type)
+      new_search.mod_search_parameter(type, mod)
+      new_search.display_search_parameters
     end
     new_search
   end
 
-  def zip_code
+  def set_zip_code
     zip = ""
     until zip.scan(/\d/).size == 5 && zip.chars.size == 5
+      puts ""
       puts "Enter the 5 digit zip code for which you are interested in buying a home."
       zip = gets.strip
       if zip.scan(/\d/).size != 5 || zip.chars.size != 5
@@ -43,10 +47,11 @@ class CommandLineInterface
     zip
   end
 
-  def min_price
+  def set_min_price
     min_p = ""
     valid_prices = ["0", "50000", "100000", "150000", "200000", "250000", "300000", "350000"]
     char_count = valid_prices.join.size
+    puts ""
     puts "Enter a min-price for the home in which you wish to purchase:"
     until min_p != ""
       (char_count + (5 * (valid_prices.size + 1))).times {print "-".colorize(:green)}
@@ -67,10 +72,11 @@ class CommandLineInterface
     min_p
   end
 
-  def max_price
+  def set_max_price
     max_p = ""
     valid_prices = ["90000", "180000", "250000", "350000", "450000", "500000", "600000", "any"]
     char_count = valid_prices.join.size
+    puts ""
     puts "Enter a max-price for the home in which you wish to purchase:"
     until max_p != ""
       (char_count + (5 * (valid_prices.size + 1))).times {print "-".colorize(:green)}
@@ -91,10 +97,11 @@ class CommandLineInterface
     max_p
   end
 
-  def bedrooms
+  def set_bedrooms
     beds = ""
     valid_rooms = ["any", "studio", "1+", "2+", "3+", "4+", "5+"]
     char_count = valid_rooms.join.size
+    puts ""
     puts "Enter the number of bedrooms for the home in which you wish to purchase:"
     until beds != ""
       (char_count + (5 * (valid_rooms.size + 1))).times {print "-".colorize(:green)}
@@ -115,10 +122,11 @@ class CommandLineInterface
     beds
   end
 
-  def bathrooms
+  def set_bathrooms
     baths = ""
     valid_baths = ["any", "1+", "2+", "3+", "4+", "5+"]
     char_count = valid_baths.join.size
+    puts ""
     puts "Enter the number of bathrooms for the home in which you wish to purchase:"
     until baths != ""
       (char_count + (5 * (valid_baths.size + 1))).times {print "-".colorize(:green)}
@@ -139,10 +147,11 @@ class CommandLineInterface
     baths
   end
 
-  def property_type
+  def set_property_type
     p_type = ""
     valid_types = ["any", "single family home", "condos/townhomes/co-ops", "mfd/mobile homes", "farms/ranches", "land", "multi-family"]
     char_count = valid_types.join.size
+    puts ""
     puts "Enter the type of property you wish to purchase:"
     until p_type != ""
       (char_count + (5 * (valid_types.size + 1))).times {print "-".colorize(:green)}
@@ -167,10 +176,10 @@ class CommandLineInterface
     input = ""
     until input == "y" || input == "n"
       puts "Would you like to modify one of your search parameters?"
-      puts "Please enter 'Y' or 'N'."
+      puts "Please enter 'Y' or 'N'"
       input = gets.strip.downcase
     end
-
+    input
   end
 
   def modify_which_parameter_type?
@@ -186,12 +195,11 @@ class CommandLineInterface
       (char_count + (5 * (valid_parameter_types.size + 1))).times {print "-".colorize(:green)}
       puts ""
       input = gets.strip.downcase
-      valid_parameter_types.collect {|type| type.downcase}
-        if include?(input)
-          mod_type_input = input
-        else
-          puts "Please enter a valid selection from the list below:".colorize(:red)
-        end
+      if valid_parameter_types.each {|type| type.downcase.include?(input)}
+        mod_type_input = input
+      else
+        puts "Please enter a valid selection from the list below:".colorize(:red)
+      end
     end
     mod_type_input
   end
@@ -199,17 +207,17 @@ class CommandLineInterface
   def modify_parameter_value(parameter_type)
     case parameter_type
     when "zip code"
-      zip_code
+      return set_zip_code
     when "min price"
-      min_price
+      return set_min_price
     when "max price"
-      max_price
+      return set_max_price
     when "bedrooms"
-      bedrooms
+      return set_bedrooms
     when "bathrooms"
-      bathrooms
+      return set_bathrooms
     when "property type"
-      property_type
+      return set_property_type
     end
   end
 
