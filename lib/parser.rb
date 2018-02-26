@@ -1,27 +1,18 @@
-
 class Parser
 
-  attr_reader :parsed_zip_code, :parsed_price, :parsed_bedrooms, :parsed_bathrooms, :parsed_property_type, :search_parameters
-
-  def initialize(inputs)
-    @parsed_zip_code = inputs.zip_code
-    @parsed_price = self.price_parse(inputs.min_price, inputs.max_price)
-    @parsed_bedrooms = self.bedrooms_parse(inputs.bedrooms)
-    @parsed_bathrooms = self.bathrooms_parse(inputs.bathrooms)
-    @parsed_property_type = self.property_parse(inputs.property_type)
-    @search_parameters = {}
-    self.save
+  def self.parse_parameters(search_parameters)
+    parsed_parameters = {
+      parsed_zip_code: search_parameters.zipcode,
+      parsed_bedrooms: bedrooms_parse(search_parameters),
+      parsed_bathrooms: bathrooms_parse(search_parameters),
+      parsed_property_type: property_type_parse(search_parameters),
+      parsed_price_range: price_parse(search_parameters)
+    }
   end
 
-  def save
-    self.search_parameters[:zip] = self.parsed_zip_code
-    self.search_parameters[:price_range] = self.parsed_price if self.parsed_price != nil
-    self.search_parameters[:bedrooms] = self.parsed_bedrooms if self.parsed_bedrooms != nil
-    self.search_parameters[:bathrooms] = self.parsed_bathrooms if self.parsed_bathrooms != nil
-    self.search_parameters[:prop_type] = self.parsed_property_type if self.parsed_property_type != nil
-  end
-
-  def price_parse(min_p, max_p)
+  def self.price_parse(search_parameters)
+    min_p = search_parameters.min_price
+    max_p = search_parameters.max_price
     price = ""
     if min_p == "0" && max_p == "any"
       price = nil
@@ -35,9 +26,9 @@ class Parser
     price
   end
 
-  def bedrooms_parse(bedrooms)
+  def self.bedrooms_parse(search_parameters)
     beds = ""
-    case bedrooms
+    case search_parameters.bedrooms
       when "any"
         beds = nil
       when "studio"
@@ -56,9 +47,9 @@ class Parser
     beds
   end
 
-  def bathrooms_parse(bathrooms)
+  def self.bathrooms_parse(search_parameters)
     baths = ""
-    case bathrooms
+    case search_parameters.bathrooms
       when "any"
         baths = nil
       when "1+"
@@ -75,9 +66,9 @@ class Parser
     baths
   end
 
-  def property_parse(property_type)
+  def self.property_type_parse(search_parameters)
     type = ""
-    case property_type
+    case search_parameters.property_type
       when "any"
         type = nil
       when "single family home"

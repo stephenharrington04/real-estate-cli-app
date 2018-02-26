@@ -10,14 +10,210 @@ class CommandLineInterface
   end
 
   def engine
-    inquiry = User_inputs.new
-    while display_search_parameters(inquiry) == "y"
-      mod_search_parameters(inquiry)
-    end
-    listings_query_results(inquiry)
+    create_listing(create_search_parameters)
     display_search_results
     next_step(query_mod)
   end
+
+#############Creating Search Parameters##########################################
+
+  def create_search_parameters
+    new_search = Search_parameters.new(zip_code, min_price, max_price, bedrooms, bathrooms, property_type).display_search_parameters
+    while modify_parameter? == "y"
+      type = modify_which_parameter_type?
+      new_search.mod_search_parameter(type, modify_parameter_value(type))
+      modify_parameter?
+    end
+    new_search
+  end
+
+  def zip_code
+    zip = ""
+    until zip.scan(/\d/).size == 5 && zip.chars.size == 5
+      puts "Enter the 5 digit zip code for which you are interested in buying a home."
+      zip = gets.strip
+      if zip.scan(/\d/).size != 5 || zip.chars.size != 5
+        puts ""
+        puts "Zip codes must be 5 digits long and must be numbers.".colorize(:red)
+        puts ""
+        puts ""
+      end
+    end
+    zip
+  end
+
+  def min_price
+    min_p = ""
+    valid_prices = ["0", "50000", "100000", "150000", "200000", "250000", "300000", "350000"]
+    char_count = valid_prices.join.size
+    puts "Enter a min-price for the home in which you wish to purchase:"
+    until min_p != ""
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      valid_prices.each {|price| print "     #{price}"}
+      puts ""
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      input = gets.strip.gsub(",","")
+      if valid_prices.include?(input)
+        min_p = input
+      else
+        puts ""
+        puts ""
+        puts "Please enter a valid min-price from the list below:".colorize(:red)
+      end
+    end
+    min_p
+  end
+
+  def max_price
+    max_p = ""
+    valid_prices = ["90000", "180000", "250000", "350000", "450000", "500000", "600000", "any"]
+    char_count = valid_prices.join.size
+    puts "Enter a max-price for the home in which you wish to purchase:"
+    until max_p != ""
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      valid_prices.each {|price| print "     #{price}"}
+      puts ""
+      (char_count + (5 * (valid_prices.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      input = gets.strip.downcase.gsub(",","")
+      if valid_prices.include?(input)
+        max_p = input
+      else
+        puts ""
+        puts ""
+        puts "Please enter a valid max-price from the list below:".colorize(:red)
+      end
+    end
+    max_p
+  end
+
+  def bedrooms
+    beds = ""
+    valid_rooms = ["any", "studio", "1+", "2+", "3+", "4+", "5+"]
+    char_count = valid_rooms.join.size
+    puts "Enter the number of bedrooms for the home in which you wish to purchase:"
+    until beds != ""
+      (char_count + (5 * (valid_rooms.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      valid_rooms.each {|room| print "     #{room}"}
+      puts ""
+      (char_count + (5 * (valid_rooms.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      input = gets.strip.downcase
+      if valid_rooms.include?(input)
+        beds = input
+      else
+        puts ""
+        puts ""
+        puts "Please enter a valid input from the list below:".colorize(:red)
+      end
+    end
+    beds
+  end
+
+  def bathrooms
+    baths = ""
+    valid_baths = ["any", "1+", "2+", "3+", "4+", "5+"]
+    char_count = valid_baths.join.size
+    puts "Enter the number of bathrooms for the home in which you wish to purchase:"
+    until baths != ""
+      (char_count + (5 * (valid_baths.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      valid_baths.each {|room| print "     #{room}"}
+      puts ""
+      (char_count + (5 * (valid_baths.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      input = gets.strip.downcase
+      if valid_baths.include?(input)
+        baths = input
+      else
+        puts ""
+        puts ""
+        puts "Please enter a valid input from the list below:".colorize(:red)
+      end
+    end
+    baths
+  end
+
+  def property_type
+    p_type = ""
+    valid_types = ["any", "single family home", "condos/townhomes/co-ops", "mfd/mobile homes", "farms/ranches", "land", "multi-family"]
+    char_count = valid_types.join.size
+    puts "Enter the type of property you wish to purchase:"
+    until p_type != ""
+      (char_count + (5 * (valid_types.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      valid_types.each {|type| print "     #{type}"}
+      puts ""
+      (char_count + (5 * (valid_types.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      input = gets.strip.downcase
+      if valid_types.include?(input)
+        p_type = input
+      else
+        puts ""
+        puts ""
+        puts "Please enter a valid input from the list below:".colorize(:red)
+      end
+    end
+    p_type
+  end
+
+  def modify_parameter?
+    input = ""
+    until input == "y" || input == "n"
+      puts "Would you like to modify one of your search parameters?"
+      puts "Please enter 'Y' or 'N'."
+      input = gets.strip.downcase
+    end
+
+  end
+
+  def modify_which_parameter_type?
+    valid_parameter_types = ["Zip Code", "Min Price", "Max Price", "Bedrooms", "Bathrooms", "Property Type"]
+    char_count = valid_parameter_types.join.size
+    mod_type_input = ""
+    puts "Which search parameter would you like to modify?"
+    until mod_type_input != ""
+      (char_count + (5 * (valid_parameter_types.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      valid_parameter_types.each {|type| print "     #{type}"}
+      puts ""
+      (char_count + (5 * (valid_parameter_types.size + 1))).times {print "-".colorize(:green)}
+      puts ""
+      input = gets.strip.downcase
+      valid_parameter_types.collect {|type| type.downcase}
+        if include?(input)
+          mod_type_input = input
+        else
+          puts "Please enter a valid selection from the list below:".colorize(:red)
+        end
+    end
+    mod_type_input
+  end
+
+  def modify_parameter_value(parameter_type)
+    case parameter_type
+    when "zip code"
+      zip_code
+    when "min price"
+      min_price
+    when "max price"
+      max_price
+    when "bedrooms"
+      bedrooms
+    when "bathrooms"
+      bathrooms
+    when "property type"
+      property_type
+    end
+  end
+
+########################################################################
+
 
   def next_step(string)
     if string == "1"
@@ -34,112 +230,15 @@ class CommandLineInterface
     end
   end
 
-  def new_beginning
-    inquiry = User_inputs.new
-    mod_search_parameters(inquiry) if display_search_parameters(inquiry) == "y"
-    inquiry
-  end
-
-  def listings_query_results(inputs)
-    parsed_criteria = Parser.new(inputs)
-    criteria_url = Url_creator.new(parsed_criteria)
+  def create_listing(search_parameters)
+    parsed_criteria = Parser.new(search_parameters)
+    url = Url_creator.new(parsed_criteria)
     if Scraper.checker(criteria_url.url) != "404 Error"
       listings_array = Scraper.search_results_scraper(criteria_url.url)
       Listing.create_from_collection(listings_array)
     else
-      listings_query_results(new_beginning)
+      create_listing(create_search_parameters)
     end
-  end
-
-  def display_search_parameters(inputs)
-    y_or_n = ""
-    puts ""
-    puts "These are the search parameters you've entered:"
-    inputs.inputs_hash.each {|key, parameter| puts "#{key}:  #{parameter}"}
-    puts ""
-    puts "Would you like to change any of these parameters?"
-    until y_or_n == "y" || y_or_n == "n"
-      puts "Please enter 'Y' or 'N'"
-      y_or_n = gets.strip.downcase
-    end
-    y_or_n
-  end
-
-  def mod_search_parameters(inputs)
-    valid_types = []
-    mod_input = ""
-    valid_parameter_types = ["Zip Code", "Min Price", "Max Price", "Bedrooms", "Bathrooms", "Property Type"]
-    char_count = valid_parameter_types.join.size
-    puts "Which search parameter would you like to modify?"
-    until mod_input != ""
-      (char_count + (5 * (valid_parameter_types.size + 1))).times {print "-".colorize(:green)}
-      puts ""
-      valid_parameter_types.each {|type| print "     #{type}"}
-      puts ""
-      (char_count + (5 * (valid_parameter_types.size + 1))).times {print "-".colorize(:green)}
-      puts ""
-      input = gets.strip.downcase
-      valid_parameter_types.each {|type| valid_types << type.downcase}
-      if valid_types.include?(input)
-        mod_input = input
-      else
-        puts "Please enter a valid selection from the list below:".colorize(:red)
-      end
-    end
-    case mod_input
-      when "zip code"
-        inputs.zip_code = inputs.zip_code?
-      when "min price"
-        inputs.min_price = inputs.min_price?
-      when "max price"
-        inputs.max_price = inputs.max_price?
-      when "bedrooms"
-        inputs.bedrooms = inputs.bedrooms?
-      when "bathrooms"
-        inputs.bathrooms = inputs.bathrooms?
-      when "property type"
-        inputs.property_type = inputs.property_type?
-    end
-    inputs
-  end
-
-  def display_search_results
-    counter = 1
-    if Listing.all == []
-      puts ""
-      puts ""
-      puts "No results found.  Please enter new search criteria.".colorize(:red)
-      puts ""
-      puts ""
-      engine
-    else
-      Listing.all.each do |listing|
-        puts "(#{counter})".colorize(:light_blue)
-        puts "   Address:".colorize(:light_blue) + "  #{listing.address ||= "Information not provided"}"
-        puts "   Price:".colorize(:light_blue) + "  #{listing.price ||= "Information not provided"}"
-        puts "   # Of Bedrooms:".colorize(:light_blue) + "  #{listing.beds ||= "Information not provided"}"
-        puts "   # Of Bathrooms:".colorize(:light_blue) + "  #{listing.baths ||= "Information not provided"}"
-        puts "   Sqft:".colorize(:light_blue) + "  #{listing.sqft ||= "Information not provided"}"
-        puts "   Listing URL:".colorize(:light_blue) + "  #{listing.house_url ||= "Information not provided"}"
-        counter += 1
-      end
-    end
-  end
-
-  def display_individual_listing(listing)
-    puts "Address:".colorize(:light_blue) + "  #{listing.address ||= "Information not provided"}"
-    puts "Price:".colorize(:light_blue) + "  #{listing.price ||= "Information not provided"}"
-    puts "Status:".colorize(:light_blue) + "  #{listing.status ||= "Information not provided"}"
-    puts "Year Built:".colorize(:light_blue) + "  #{listing.year_built ||= "Information not provided"}"
-    puts "Days on Market:".colorize(:light_blue) + "  #{listing.days_on_market ||= "Information not provided"}"
-    puts "# Of Bedrooms:".colorize(:light_blue) + "  #{listing.beds ||= "Information not provided"}"
-    puts "# of Bathrooms:".colorize(:light_blue) + "  #{listing.baths ||= "Information not provided"}"
-    puts "Square Feet (livable):".colorize(:light_blue) + "  #{listing.sqft ||= "Information not provided"}"
-    puts "Acres / Sqft (property):".colorize(:light_blue) + "  #{listing.acres ||= "Information not provided"}"
-    puts "Price per SqFt:".colorize(:light_blue) + "  #{listing.price_per_sqft ||= "Information not provided"}"
-    puts "Property Type:".colorize(:light_blue) + "  #{listing.property_type ||= "Information not provided"}"
-    puts "Listing URL:".colorize(:light_blue) + "  #{listing.house_url ||= "Information not provided"}"
-    puts "Description:".colorize(:light_blue) + "  #{listing.description ||= "Information not provided"}"
   end
 
   def query_mod
