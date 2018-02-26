@@ -184,6 +184,7 @@ class CommandLineInterface
 
   def modify_which_parameter_type?
     valid_parameter_types = ["Zip Code", "Min Price", "Max Price", "Bedrooms", "Bathrooms", "Property Type"]
+    valid_types_guard = valid_parameter_types.collect {|type| type.downcase}
     char_count = valid_parameter_types.join.size
     mod_type_input = ""
     puts "Which search parameter would you like to modify?"
@@ -195,10 +196,12 @@ class CommandLineInterface
       (char_count + (5 * (valid_parameter_types.size + 1))).times {print "-".colorize(:green)}
       puts ""
       input = gets.strip.downcase
-      if valid_parameter_types.each {|type| type.downcase.include?(input)}
+      if valid_types_guard.include?(input)
         mod_type_input = input
       else
+        puts ""
         puts "Please enter a valid selection from the list below:".colorize(:red)
+        puts ""
       end
     end
     mod_type_input
